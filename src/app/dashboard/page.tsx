@@ -1,11 +1,7 @@
-import React from 'react'
-
-type Props = {}
-
-const page = (props: Props) => {
+async function Home() {
   return (
-    <div>page</div>
-  )
+    <div>Forum Content</div>
+  );
 }
 
-export default page
+export default Home;
