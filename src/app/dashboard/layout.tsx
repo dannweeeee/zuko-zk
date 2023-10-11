@@ -10,7 +10,7 @@ const inter = Inter({ subsets: ['latin'] })
 
 export const metadata = {
   title: 'Zuko',
-  description: 'A ZK Powered Community'
+  description: 'A ZK Powered Exclusive Community'
 }
 
 export default function RootLayout({
