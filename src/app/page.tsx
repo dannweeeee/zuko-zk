@@ -22,9 +22,9 @@ export default function Home() {
         <h2 className="font-semibold text-5xl text-center">
           ZK
           <span className="purple-text-gradient font-bold">
-            -Anonymous-
+            -Exclusive-
           </span>
-          Job Forum
+          Community
         </h2>
         <div className="mt-4"></div>
         <h3 className="font-semibold text-3xl text-center text-slate-700">
