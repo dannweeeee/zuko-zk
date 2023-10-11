@@ -17,7 +17,7 @@ export const sidebarLinks = [
     {
       imgURL: "/assets/create.svg",
       route: "/create-job",
-      label: "Create Job",
+      label: "Create Post",
     },
     {
       imgURL: "/assets/community.svg",
