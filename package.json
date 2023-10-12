@@ -11,6 +11,9 @@
   "dependencies": {
     "@radix-ui/react-separator": "^1.0.3",
     "@radix-ui/react-slot": "^1.0.2",
+    "@sismo-core/sismo-connect-react": "^0.0.23",
+    "@sismo-core/sismo-connect-server": "^0.0.23",
+    "bufferutil": "^4.0.7",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.0.0",
     "lucide-react": "^0.284.0",
@@ -19,7 +22,8 @@
     "react-dom": "^18",
     "tailwind-merge": "^1.14.0",
     "tailwindcss-animate": "^1.0.7",
-    "typewriter-effect": "^2.21.0"
+    "typewriter-effect": "^2.21.0",
+    "utf-8-validate": "^6.0.3"
   },
   "devDependencies": {
     "@types/node": "^20",
