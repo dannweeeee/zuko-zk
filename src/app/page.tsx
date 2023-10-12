@@ -39,12 +39,6 @@ export default function Home() {
 
         <div className="flex justify-center">
           <SismoButton />
-          <Link href="/dashboard/">
-            <Button className="font-semibold bg-blue-600">
-              Get Started with Sismo
-              <ArrowRight className="ml-2 w-5 h-5" strokeWidth={3} />
-            </Button>
-          </Link>
         </div>
       </div>
     </div>

@@ -17,6 +17,7 @@ const sismoConnect = SismoConnect({
 
 export async function POST(req: NextRequest) {
     const simsoConnectResponse = await req.json() // get the zk proof
+    console.log('Simoso connect proof?', simsoConnectResponse)
     try {
         const result: SismoConnectVerifiedResult = await sismoConnect.verify(simsoConnectResponse, { auths: [{ authType: AuthType.VAULT }] })
 

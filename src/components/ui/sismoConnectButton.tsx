@@ -1,3 +1,5 @@
+"use client";
+
 // react page
 import {
   SismoConnectButton,
@@ -6,6 +8,8 @@ import {
   ClaimType,
   SismoConnectResponse,
 } from "@sismo-core/sismo-connect-react";
+import { useRouter } from "next/navigation";
+import { useState } from "react";
 
 const config: SismoConnectConfig = {
   appId: process.env.NEXT_SISMO_CONNECT_APP_ID || "",
@@ -35,6 +39,14 @@ const config: SismoConnectConfig = {
 
 // button that will redirect tu users faults
 export default function SismoButton() {
+  const router = useRouter();
+  const [userLoggedIn, setUserLoggedIn] = useState(false);
+
+  const handleLogin = () => {
+    console.log("Got here??");
+    setUserLoggedIn(true);
+    router.push("/dashboard");
+  };
   return (
     <SismoConnectButton
       config={config}
@@ -46,7 +58,7 @@ export default function SismoButton() {
         // user is required to prove ownership of their vaultId for this appId
         { authType: AuthType.VAULT },
         // user is required to prove ownership of an EVM account from their vault
-        { authType: AuthType.EVM_ACCOUNT },
+        /*  { authType: AuthType.EVM_ACCOUNT },
         // user is required to prove ownership of 0xa4c94a6091545e40fc9c3e0982aec8942e282f38
         {
           authType: AuthType.EVM_ACCOUNT,
@@ -58,7 +70,7 @@ export default function SismoButton() {
         { authType: AuthType.TWITTER, isOptional: true },
         // user can prove ownership of @dhadrien Telegram account, optional
         //                                   telegram of @dhadrien
-        { authType: AuthType.TELEGRAM, userId: "875608110", isOptional: true },
+        { authType: AuthType.TELEGRAM, userId: "875608110", isOptional: true }, */
       ]}
       // Claims = prove groump membership of a Data Source in a specific Data Group.
       // Data Groups = [{[dataSource1]: value1}, {[dataSource1]: value1}, .. {[dataSource]: value}]
@@ -129,10 +141,13 @@ export default function SismoButton() {
       signature={{ message: "I love Sismo!", isSelectableByUser: true }}
       // onResponseBytes calls a 'setResponse' function with the responseBytes returned by the Sismo Vault
       onResponse={async (response: SismoConnectResponse) => {
-        await fetch("/api/verify", {
+        const res = await fetch("/api/verify", {
           method: "POST",
           body: JSON.stringify(response),
         });
+        if (res.status === 200) {
+          handleLogin();
+        }
       }}
     />
   );
