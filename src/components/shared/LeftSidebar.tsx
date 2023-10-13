@@ -23,12 +23,6 @@ function LeftSidebar() {
                     )}
                 )}
             </div>
-            <div className="mt-10 px-6">
-              <Button>
-                <Image src="/assets/logout.svg" alt="Add" width={24} height={24} />
-                <p className="text-light-1 max-lg:hidden">Logout</p>
-              </Button>
-            </div>
         </section>
     )
 }

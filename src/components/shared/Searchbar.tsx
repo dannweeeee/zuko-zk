@@ -23,9 +23,7 @@ function Searchbar() {
         id='text'
         value={search}
         onChange={(e) => setSearch(e.target.value)}
-        placeholder={`${
-          pathname === "/search" ? "Search creators" : "Search communities"
-        }`}
+        placeholder={"Search"}
         className='no-focus searchbar_input'
       />
     </div>
