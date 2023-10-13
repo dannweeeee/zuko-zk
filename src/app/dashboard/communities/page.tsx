@@ -8,7 +8,7 @@ async function Page() {
     <>
       <h1 className='head-text'>Communities</h1>
 
-      <div className='mt-5'>
+      <div className='mt-10'>
         <Searchbar />
       </div>
 
