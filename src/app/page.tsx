@@ -9,7 +9,6 @@ import Link from "next/link";
 
 export default function Home() {
   console.log("brääää");
-  console.log(process.env.NEXT_SISMO_CONNECT_APP_ID, "wats appid");
   return (
     <div className="bg-gradient-to-r min-h-screen from-blue-100 to-teal-100">
       <Link href="/" className="absolute px-6 py-3">
