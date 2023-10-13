@@ -76,12 +76,17 @@
 }
 
 @layer components {
+  /* main */
+  .main-container {
+    @apply flex min-h-screen flex-1 flex-col items-center px-6 pb-10 pt-10 max-md:pb-32 sm:px-10 bg-blue-100;
+  }
+   
   .topbar {
-    @apply fixed top-0 z-30 flex w-full items-center justify-between bg-gradient-to-r from-blue-100 to-teal-100 px-6 py-3;
+    @apply fixed top-0 z-30 flex w-full items-center justify-between from-blue-100 px-6 py-3;
   }
 
   .bottombar {
-    @apply fixed bottom-0 z-10 w-full rounded-t-3xl p-4 bg-gradient-to-r from-blue-100 to-teal-100 backdrop-blur-lg md:hidden;
+    @apply fixed bottom-0 z-10 w-full rounded-t-3xl p-4 from-blue-100 backdrop-blur-lg md:hidden;
   }
 
   .bottombar_container {
@@ -100,9 +105,29 @@
     @apply relative flex justify-start gap-4 rounded-lg p-4;
   }
 
+  .searchbar {
+    @apply flex gap-1 rounded-lg px-4 py-2;
+  }
+
+  .searchbar_input {
+    @apply border-none outline-none !important;
+  }
+
+  .rightsidebar {
+    @apply sticky right-0 top-0 z-20 flex h-screen w-fit flex-col justify-between gap-12 overflow-auto border-l bg-blue-100 px-10 pb-6 pt-28 max-xl:hidden;
+  }
+
+  /* No Result */
+  .no-result {
+    @apply text-center;
+  }
 }
 
 @layer utilities {
+  .head-text {
+    @apply text-heading2-bold text-light-1;
+  }
+
   .css-invert {
     @apply invert-[50%] brightness-200;
   }
@@ -125,7 +150,37 @@
   .custom-scrollbar::-webkit-scrollbar-thumb:hover {
     background: #7878a3;
   }
+
+  .no-focus {
+    @apply focus-visible:ring-0 focus-visible:ring-transparent focus-visible:ring-offset-0 !important;
+  }
+
+  .verticalLine {
+    border-left: 1px solid #FFFFFF;
+  }
 }
+
+.text-heading4-medium {
+  font-size: 17px;
+  line-height: 140%;
+  font-weight: 500;
+}
+
+.text-left {
+  text-align: left;
+}
+
+.text-heading2-bold {
+  font-size: 25px;
+  line-height: 140%;
+  font-weight: 700;
+}
+
+.text-light-1 {
+  --tw-text-opacity: 1;
+  color: rgb(0 0 0 / var(--tw-text-opacity));
+}
+
 
 .blue-text-gradient {
   /* background: -webkit-linear-gradient(#eee, #333); */
