@@ -6,17 +6,17 @@ export const sidebarLinks = [
     },
     {
       imgURL: "/assets/search.svg",
-      route: "/search",
+      route: "/dashboard/search",
       label: "Search",
     },
     {
       imgURL: "/assets/heart.svg",
-      route: "/activity",
-      label: "Activity",
+      route: "/dashboard/notifications",
+      label: "Notifications",
     },
     {
       imgURL: "/assets/create.svg",
-      route: "/create-job",
+      route: "/create-post",
       label: "Create Post",
     },
     {
