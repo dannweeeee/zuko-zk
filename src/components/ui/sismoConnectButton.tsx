@@ -1,5 +1,6 @@
 "use client";
 
+import { claims } from "@/sismoConstants";
 // react page
 import {
   SismoConnectButton,
@@ -18,42 +19,37 @@ export default function SismoButton() {
   const verifySismoProofBackend = async (
     sismoResponse: SismoConnectResponse
   ) => {
-    console.log("Verifying proooof");
-    const res = await fetch("http://localhost:3050/auth", {
+    const res = await fetch("http://localhost:3050/v1/auth", {
       method: "POST",
       body: JSON.stringify(sismoResponse),
+      headers: {
+        "Content-Type": "application/json",
+      },
     });
     if (res.status === 200) {
-      const { vaultId } = await res.json();
-      handleLogin();
+      const signInResult = await res.json();
+      handleLogin(signInResult);
     }
   };
 
-  const handleLogin = () => {
-    console.log("Got here??");
+  const handleLogin = (signInResult: any) => {
     setUserLoggedIn(true);
-    router.push("/dashboard");
+    const { vaultId, jwt, newUser } = signInResult;
+    console.log(signInResult, "signInResult BRÄ");
+    router.push(`/dashboard/?vaultId=${vaultId}&jwt=${jwt}&newUser=${newUser}`);
   };
   return (
     <SismoConnectButton
       config={{
-        appId: process.env.NEXT_SISMO_CONNECT_APP_ID || "",
+        appId: "0x1224f1ca77f3c19432034f998bcac8bb" || "",
         vault: {
-          impersonate: ["nansen.eth", "jebus.eth"],
+          impersonate: ["nansen.eth", "dhadrien.sismo.eth"],
         },
       }}
       auths={[{ authType: AuthType.VAULT }]}
-      claims={[
-        {
-          groupId: "0xf002554351fe264d75f59e7fba89c2e6",
-          claimType: ClaimType.GTE,
-          value: 1,
-          isOptional: true,
-          isSelectableByUser: true,
-        },
-      ]}
+      claims={claims}
       onResponse={async (response: SismoConnectResponse) => {
-        console.log("Getting response...");
+        console.log("Getting response... BRÄ ");
         await verifySismoProofBackend(response);
       }}
     />

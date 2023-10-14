@@ -1,18 +1,14 @@
+"use client";
 import "../globals.css";
-import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 
 import Topbar from "@/components/shared/Topbar";
 import LeftSidebar from "@/components/shared/LeftSidebar";
 import Bottombar from "@/components/shared/Bottombar";
 import RightSidebar from "@/components/shared/RightSidebar";
+import { useEffect, useState } from "react";
 
 const inter = Inter({ subsets: ["latin"] });
-
-export const metadata = {
-  title: "Zuko",
-  description: "A ZK Powered Exclusive Community",
-};
 
 export default function RootLayout({
   children,
