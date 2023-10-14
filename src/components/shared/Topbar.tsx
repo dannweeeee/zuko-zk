@@ -9,19 +9,6 @@ import { AiOutlineCaretDown, AiOutlineCaretUp } from "react-icons/ai";
 function Topbar() {
   const [isOpen, setIsOpen] = useState(false);
 
-  const [user, setUser] = useState({});
-
-  useEffect(() => {
-    const searchParams = new URLSearchParams(location.search);
-    setUser({
-      vaultId: searchParams.get("vaultId"),
-      jwt: searchParams.get("jwt"),
-      newUser: searchParams.get("newUser"),
-    });
-  }, []);
-
-  console.log(user, "what is user state? BRÄ");
-
   return (
     <nav className="topbar">
       <Link href="/" className="flex items-center gap-4">

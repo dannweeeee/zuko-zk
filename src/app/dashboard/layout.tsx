@@ -7,6 +7,7 @@ import LeftSidebar from "@/components/shared/LeftSidebar";
 import Bottombar from "@/components/shared/Bottombar";
 import RightSidebar from "@/components/shared/RightSidebar";
 import { useEffect, useState } from "react";
+import AuthUser from "@/components/shared/AuthUser";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -25,7 +26,9 @@ export default function RootLayout({
           <div className="verticalLine"></div>
           <section className="main-container">
             <div className="w-full max-w-4xl">{children}</div>
+            <AuthUser />
           </section>
+
           <div className="verticalLine"></div>
           <RightSidebar />
         </main>
