@@ -4,6 +4,7 @@ import { Input } from "../ui/input";
 import { Button } from "../ui/button";
 import Cookies from "universal-cookie";
 import { useRouter } from "next/navigation";
+import ApiService from "@/ApiService";
 
 interface AuthUser {
   vaultId: string | null;
@@ -33,21 +34,17 @@ function AuthUser() {
   }, [success]);
 
   const handleSubmitUsername = async () => {
-    const res = await fetch("http://localhost:3050/v1/user", {
-      method: "POST",
-      body: JSON.stringify({ vault_id: user?.vaultId, username: userName }),
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
-    if (res.status === 200) {
-      const createdUserResult = await res.json();
-      console.log(createdUserResult, "createdUserResult");
-      setUser(null); // set user to null again
-      setSuccess(
-        "You successfully created a user. You can now access your communities"
-      );
-      router.push("/dashboard");
+    if (user) {
+      const res = await ApiService.createUser(user.vaultId as string, userName);
+      if (res.status === 200) {
+        const createdUserResult = await res.json();
+        console.log(createdUserResult, "createdUserResult");
+        setUser(null); // set user to null again
+        setSuccess(
+          "You successfully created a user. You can now access your communities"
+        );
+        router.push("/dashboard");
+      }
     }
   };
 

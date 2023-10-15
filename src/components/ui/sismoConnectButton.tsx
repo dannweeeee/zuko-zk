@@ -1,5 +1,6 @@
 "use client";
 
+import ApiService from "@/ApiService";
 import { claims } from "@/sismoConstants";
 // react page
 import {
@@ -21,17 +22,10 @@ export default function SismoButton(props: any) {
     sismoResponse: SismoConnectResponse
   ) => {
     setLoading(true);
-    const res = await fetch("http://localhost:3050/v1/auth", {
-      method: "POST",
-      body: JSON.stringify(sismoResponse),
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
+    const res = await ApiService.verifySismoProofBackend(sismoResponse);
     if (res.status === 200) {
       const signInResult = await res.json();
       setLoading(false);
-
       handleLogin(signInResult);
     }
   };
@@ -46,9 +40,6 @@ export default function SismoButton(props: any) {
     <SismoConnectButton
       config={{
         appId: "0x1224f1ca77f3c19432034f998bcac8bb" || "",
-        vault: {
-          impersonate: ["dhadrien.sismo.eth"],
-        },
       }}
       auths={[{ authType: AuthType.VAULT }]}
       claims={claims}
