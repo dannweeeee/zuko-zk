@@ -12,13 +12,15 @@ import {
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 
-export default function SismoButton() {
+export default function SismoButton(props: any) {
+  const { loading, setLoading } = props;
   const router = useRouter();
   const [userLoggedIn, setUserLoggedIn] = useState(false);
 
   const verifySismoProofBackend = async (
     sismoResponse: SismoConnectResponse
   ) => {
+    setLoading(true);
     const res = await fetch("http://localhost:3050/v1/auth", {
       method: "POST",
       body: JSON.stringify(sismoResponse),
@@ -28,6 +30,8 @@ export default function SismoButton() {
     });
     if (res.status === 200) {
       const signInResult = await res.json();
+      setLoading(false);
+
       handleLogin(signInResult);
     }
   };
@@ -43,7 +47,7 @@ export default function SismoButton() {
       config={{
         appId: "0x1224f1ca77f3c19432034f998bcac8bb" || "",
         vault: {
-          impersonate: ["nansen.eth", "dhadrien.sismo.eth"],
+          impersonate: ["dhadrien.sismo.eth"],
         },
       }}
       auths={[{ authType: AuthType.VAULT }]}

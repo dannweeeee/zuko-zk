@@ -2,6 +2,8 @@
 import React, { useEffect, useRef, useState } from "react";
 import { Input } from "../ui/input";
 import { Button } from "../ui/button";
+import Cookies from "universal-cookie";
+import { useRouter } from "next/navigation";
 
 interface AuthUser {
   vaultId: string | null;
@@ -13,15 +15,22 @@ function AuthUser() {
   const [isOpen, setIsOpen] = useState(false);
   const [user, setUser] = useState<AuthUser | null>(null);
   const [userName, setUserName] = useState("");
+  const [success, setSuccess] = useState("");
+
+  const cookies = new Cookies();
+  const router = useRouter();
 
   useEffect(() => {
     const searchParams = new URLSearchParams(location.search);
+
     setUser({
       vaultId: searchParams.get("vaultId"),
       jwt: searchParams.get("jwt"),
       newUser: searchParams.get("newUser"),
     });
-  }, []);
+    //Add auth token to cookies
+    cookies.set("jwt", searchParams.get("jwt"));
+  }, [success]);
 
   const handleSubmitUsername = async () => {
     const res = await fetch("http://localhost:3050/v1/user", {
@@ -32,7 +41,13 @@ function AuthUser() {
       },
     });
     if (res.status === 200) {
-      console.log(res, "wats res?");
+      const createdUserResult = await res.json();
+      console.log(createdUserResult, "createdUserResult");
+      setUser(null); // set user to null again
+      setSuccess(
+        "You successfully created a user. You can now access your communities"
+      );
+      router.push("/dashboard");
     }
   };
 
@@ -61,6 +76,7 @@ function AuthUser() {
           <Button className="gap-5" onClick={handleSubmitUsername}>
             Submit
           </Button>
+          {success}
         </div>
       ) : null}
     </div>

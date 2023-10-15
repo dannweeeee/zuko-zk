@@ -27,6 +27,7 @@
     "tailwind-merge": "^1.14.0",
     "tailwindcss-animate": "^1.0.7",
     "typewriter-effect": "^2.21.0",
+    "universal-cookie": "^6.1.1",
     "utf-8-validate": "^6.0.3",
     "zod": "^3.22.4"
   },
