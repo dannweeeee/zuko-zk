@@ -23,10 +23,10 @@ export default function SismoButton(props: any) {
   ) => {
     setLoading(true);
     const res = await ApiService.verifySismoProofBackend(sismoResponse);
-    if (res.status === 200) {
-      const signInResult = await res.json();
+    console.log(res, "wats response in apiservice??");
+    if (res.jwt) {
       setLoading(false);
-      handleLogin(signInResult);
+      handleLogin(res);
     }
   };
 

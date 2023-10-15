@@ -36,9 +36,7 @@ function AuthUser() {
   const handleSubmitUsername = async () => {
     if (user) {
       const res = await ApiService.createUser(user.vaultId as string, userName);
-      if (res.status === 200) {
-        const createdUserResult = await res.json();
-        console.log(createdUserResult, "createdUserResult");
+      if (res) {
         setUser(null); // set user to null again
         setSuccess(
           "You successfully created a user. You can now access your communities"

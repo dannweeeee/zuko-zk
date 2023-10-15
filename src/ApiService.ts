@@ -1,7 +1,6 @@
 import { SismoConnectResponse } from "@sismo-core/sismo-connect-react";
 
-// ApiService.ts
-const API_BASE_URL = process.env.NODE_ENV === 'production' ? 'https://production-api-url.com' : 'http://localhost:3050';
+const API_BASE_URL = process.env.API_PRODUCTION_URL ? process.env.API_PRODUCTION_URL : 'http://localhost:3050';
 
 const HEADERS = {
     'Content-Type': 'application/json',
@@ -24,6 +23,7 @@ const ApiService = {
         };
 
         const response = await fetch(url, options);
+        console.log(url, 'wats url???, response:', response)
 
         if (response.status === 200) {
             return response.json();
