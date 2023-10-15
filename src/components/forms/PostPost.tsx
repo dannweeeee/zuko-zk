@@ -28,7 +28,7 @@ interface Props {
   btnTitle: string;
 }
 
-function Post({ userId }: { userId: string }) {
+function PostPost({ userId }: { userId: string }) {
 
     const router = useRouter();
     const pathname = usePathname();
@@ -71,4 +71,4 @@ function Post({ userId }: { userId: string }) {
     );
 }
 
-export default Post;
+export default PostPost;
