@@ -1,6 +1,6 @@
 "use client";
 
-import TypewriterTitle from "@/components/TypewriterTitle";
+import TypewriterTitle from "@/components/shared/TypewriterTitle";
 import { Button } from "@/components/ui/button";
 import SismoButton from "@/components/ui/sismoConnectButton";
 import { ArrowRight } from "lucide-react";
