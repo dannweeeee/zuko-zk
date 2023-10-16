@@ -5,9 +5,23 @@ import Image from "next/image";
 import Link from "next/link";
 import { Button } from "../ui/button";
 import { AiOutlineCaretDown, AiOutlineCaretUp } from "react-icons/ai";
+import ApiService from "@/ApiService";
+
+interface UserData {
+  username: string;
+  vaultId: string;
+}
 
 function Topbar() {
   const [isOpen, setIsOpen] = useState(false);
+  const [vaultId, setVaultId] = useState('');
+  const [userData, setUserData] = useState<UserData | null>(null);
+
+  const handleUserSearch = async () => {
+    const data = await ApiService.fetchUser(vaultId);
+    setUserData(data);
+    console.log('User Data:', data);
+  };
 
   return (
     <nav className="topbar">
@@ -28,12 +42,12 @@ function Topbar() {
         <div className="flex items-center gap-4 flex-col">
           <Button className="gap-5" onClick={() => setIsOpen((prev) => !prev)}>
             <Image
-              src={`https://api.multiavatar.com/finesto.png`}
+              src={`https://api.multiavatar.com/${userData?.username}.png`}
               alt="profile-picture"
               width={35}
               height={35}
             />
-            Profile
+            {userData?.username}
             {!isOpen ? (
               <AiOutlineCaretDown className="h-8" />
             ) : (

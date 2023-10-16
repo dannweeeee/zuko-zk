@@ -10,7 +10,7 @@ import UserCard from "../cards/UserCard";
 interface UserData {
     username: string;
     vaultId: string;
-  }
+}
 
 function UserSearchBar() {
   const [vaultId, setVaultId] = useState('');
