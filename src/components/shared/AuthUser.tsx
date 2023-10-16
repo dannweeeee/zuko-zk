@@ -41,7 +41,7 @@ function AuthUser() {
         setSuccess(
           "You successfully created a user. You can now access your communities"
         );
-        router.push("/dashboard");
+        router.push("/dashboard/home");
       }
     }
   };
