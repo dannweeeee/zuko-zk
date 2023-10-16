@@ -36,7 +36,7 @@ function UserSearchBar() {
           id="text"
           value={vaultId}
           onChange={(e) => setVaultId(e.target.value)}
-          placeholder={"Input VaultId..."}
+          placeholder={"Input vaultId..."}
           className="no-focus searchbar_input"
         />
         <Button className="gap-5" onClick={handleUserSearch}>
