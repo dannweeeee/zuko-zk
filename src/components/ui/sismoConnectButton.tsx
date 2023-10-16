@@ -40,6 +40,9 @@ export default function SismoButton(props: any) {
     <SismoConnectButton
       config={{
         appId: "0x1224f1ca77f3c19432034f998bcac8bb" || "",
+        /*     vault: {
+          impersonate: ["dhadrien.sismo.eth", "jebus.eth"],
+        }, */
       }}
       auths={[{ authType: AuthType.VAULT }]}
       claims={claims}
