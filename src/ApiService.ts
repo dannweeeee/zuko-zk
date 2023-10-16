@@ -65,8 +65,8 @@ const ApiService = {
         }
     },
 
-    fetchCommunity: async (vault_id: string) => {
-        const url = `${API_BASE_URL}/v1/community/vault/${vault_id}`;
+    fetchCommunity: async (group_id: string) => {
+        const url = `${API_BASE_URL}/v1/community/group/${group_id}`;
         const options = {
             method: ApiMethods.GET,
             headers: HEADERS,

@@ -43,7 +43,7 @@ function UserSearchBar() {
               Search
         </Button>
       </div>
-      <div className='mt-14 flex flex-col gap-9'>
+      <div className='mt-5 flex flex-col gap-9 bg-cyan-300 rounded-lg p-5'>
         { userData ? (
             <>
               <UserCard
@@ -53,7 +53,7 @@ function UserSearchBar() {
               />
             </>
           ) : (
-            <p className='no-result'>No Result</p>
+            <p className='no-result font-semibold'>No Result</p>
           )}
       </div>
     </div>
