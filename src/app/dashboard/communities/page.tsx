@@ -1,6 +1,6 @@
 import { redirect } from "next/navigation";
 
-import Searchbar from "@/components/shared/Searchbar";
+import CommunitySearchbar from "@/components/shared/CommunitySearchbar";
 
 async function Page() {
 
@@ -9,7 +9,7 @@ async function Page() {
       <h1 className='head-text'>Communities</h1>
 
       <div className='mt-10'>
-        <Searchbar />
+        <CommunitySearchbar />
       </div>
 
       <section className='mt-9 flex flex-wrap gap-4'>
