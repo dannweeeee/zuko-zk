@@ -29,11 +29,11 @@ export default function Home() {
         ) : (
           <div>
             {" "}
-            <h1 className="font-semibold text-7xl text-center blue-text-gradient">
+            <h1 className="font-semibold text-7xl text-center blue-text-gradient glitch">
               Zuko
             </h1>
             <div className="mt-4"></div>
-            <h2 className="font-semibold text-5xl text-center">
+            <h2 className="font-semibold text-5xl text-center glitch">
               ZK
               <span className="purple-text-gradient font-bold">
                 -Exclusive-

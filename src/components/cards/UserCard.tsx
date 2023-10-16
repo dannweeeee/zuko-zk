@@ -36,7 +36,7 @@ function UserCard({ vaultid, username }: Props) {
             router.push(`/dashboard/profile/${vaultid}`)
           }}
       >
-        View
+        Chat
       </Button>
     </article>
   );
