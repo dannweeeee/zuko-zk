@@ -121,6 +121,19 @@
   .no-result {
     @apply text-center;
   }
+
+   /* User card */
+   .user-card {
+    @apply flex flex-col justify-between gap-4;
+  }
+
+  .user-card_avatar {
+    @apply flex flex-1 items-start justify-start gap-3;
+  }
+
+  .user-card_btn {
+    @apply h-auto min-w-[74px] rounded-lg bg-blue-500 text-[12px] text-light-1 !important;
+  }
 }
 
 @layer utilities {

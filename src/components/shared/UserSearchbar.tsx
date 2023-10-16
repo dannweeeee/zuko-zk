@@ -5,6 +5,7 @@ import Image from "next/image";
 import { useState } from "react";
 import { Input } from "../ui/input";
 import { Button } from "../ui/button";
+import UserCard from "../cards/UserCard";
 
 interface UserData {
     username: string;
@@ -18,28 +19,43 @@ function UserSearchBar() {
   const handleUserSearch = async () => {
     const data = await ApiService.fetchUser(vaultId);
     setUserData(data);
-    console.log('Community Data:', data);
+    console.log('User Data:', data);
   };
 
   return (
-    <div className='searchbar'>
-      <Image
-        src='/assets/search-gray.svg'
-        alt='search'
-        width={24}
-        height={24}
-        className='object-contain'
-      />
-      <Input
-        id="text"
-        value={vaultId}
-        onChange={(e) => setVaultId(e.target.value)}
-        placeholder={"Input VaultId..."}
-        className="no-focus searchbar_input"
-      />
-     <Button className="gap-5" onClick={handleUserSearch}>
-            Search
-      </Button>
+    <div>
+      <div className='searchbar'>
+        <Image
+          src='/assets/search-gray.svg'
+          alt='search'
+          width={24}
+          height={24}
+          className='object-contain'
+        />
+        <Input
+          id="text"
+          value={vaultId}
+          onChange={(e) => setVaultId(e.target.value)}
+          placeholder={"Input VaultId..."}
+          className="no-focus searchbar_input"
+        />
+        <Button className="gap-5" onClick={handleUserSearch}>
+              Search
+        </Button>
+      </div>
+      <div className='mt-14 flex flex-col gap-9'>
+        { userData ? (
+            <>
+              <UserCard
+                key={userData.vaultId}
+                vaultid={userData.vaultId}
+                username={userData.username}
+              />
+            </>
+          ) : (
+            <p className='no-result'>No Result</p>
+          )}
+      </div>
     </div>
   );
 }
