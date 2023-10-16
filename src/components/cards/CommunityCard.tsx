@@ -25,7 +25,7 @@ function CommunityCard({ communityId, description, groupId, name}: Props) {
 
         <div>
           <Link href={`/communities/${groupId}`}>
-            <h4 className='text-base-semibold text-light-1'>{name}</h4>
+            <h4 className='font-semibold text-light-1'>{name}</h4>
           </Link>
         </div>
       </div>
