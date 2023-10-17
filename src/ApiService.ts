@@ -66,7 +66,7 @@ const ApiService = {
     },
 
     fetchUsers: async () => {
-        const url = `${API_BASE_URL}/v1/user/}`;
+        const url = `${API_BASE_URL}/v1/user/`;
         const options = {
             method: ApiMethods.GET,
             headers: HEADERS,

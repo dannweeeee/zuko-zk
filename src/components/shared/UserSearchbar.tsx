@@ -6,6 +6,7 @@ import { useState } from "react";
 import { Input } from "../ui/input";
 import { Button } from "../ui/button";
 import UserCard from "../cards/UserCard";
+import UserList from "./UserList";
 
 interface UserData {
     username: string;
@@ -43,7 +44,7 @@ function UserSearchBar() {
               Search
         </Button>
       </div>
-      <div className='mt-5 flex flex-col gap-9 bg-cyan-300 rounded-lg p-5'>
+      <div className='mt-5 flex flex-col gap-9rounded-lg p-5'>
         { userData ? (
             <>
               <UserCard
@@ -53,7 +54,9 @@ function UserSearchBar() {
               />
             </>
           ) : (
-            <p className='no-result font-semibold'>No Result</p>
+            <div>
+              <UserList />
+            </div>
           )}
       </div>
     </div>
