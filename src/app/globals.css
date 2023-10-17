@@ -132,7 +132,7 @@
   }
 
   .user-card_btn {
-    @apply h-auto min-w-[74px] rounded-lg bg-blue-500 text-[12px] text-light-1 !important;
+    @apply h-auto min-w-[74px] rounded-lg bg-blue-500 text-[12px] text-light-1 mb-6 !important;
   }
 
   /* Community Card */

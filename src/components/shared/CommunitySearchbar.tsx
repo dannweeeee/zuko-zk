@@ -6,6 +6,7 @@ import { useState } from "react";
 import { Input } from "../ui/input";
 import { Button } from "../ui/button";
 import CommunityCard from "../cards/CommunityCard";
+import CommunityList from "./CommunityList";
 
 interface ApiResponse {
   meta: {
@@ -22,7 +23,7 @@ interface ApiResponse {
 
 function CommunitySearchbar() {
   const [groupId, setGroupId] = useState('');
-  const [communityData, setCommunityData] = useState<ApiResponse | null>(null); // Specify the type here
+  const [communityData, setCommunityData] = useState<ApiResponse | null>(null);
 
   const handleCommunitySearch = async () => {
     const data = await ApiService.fetchCommunity(groupId);
@@ -51,7 +52,7 @@ function CommunitySearchbar() {
               Search
         </Button> 
       </div>
-      <div className='mt-5 flex flex-col gap-9 bg-cyan-300 rounded-lg p-5'>
+      <div className='mt-5 flex flex-col gap-9 rounded-lg p-5'>
       {communityData ? (
           communityData.results.map((result) => (
             <CommunityCard
@@ -63,7 +64,9 @@ function CommunitySearchbar() {
             />
           ))
         ) : (
-          <p className='no-result font-semibold'>No Result</p>
+          <div>
+            <CommunityList />
+          </div>
         )}
       </div>
     </div>
