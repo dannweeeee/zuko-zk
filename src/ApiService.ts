@@ -1,6 +1,7 @@
 import { SismoConnectResponse } from "@sismo-core/sismo-connect-react";
 
-const API_BASE_URL = process.env.API_PRODUCTION_URL ? process.env.API_PRODUCTION_URL : 'http://localhost:3050';
+// const API_BASE_URL = process.env.API_PRODUCTION_URL ? process.env.API_PRODUCTION_URL : 'http://localhost:3050';
+const API_BASE_URL = 'https://zuko-server-api.onrender.com';
 
 const HEADERS = {
     'Content-Type': 'application/json',
@@ -23,7 +24,7 @@ const ApiService = {
         };
 
         const response = await fetch(url, options);
-        console.log(url, 'wats url???, response:', response)
+        console.log(url, 'wats url???, response:', response);
 
         if (response.status === 200) {
             return response.json();
@@ -111,6 +112,38 @@ const ApiService = {
             throw new Error(`Request failed with status ${response.status}`);
         }
     },
+    
+    fetchCommunityByVaultId: async (vault_id: string) => {
+        const url = `${API_BASE_URL}/v1/community/vault/${vault_id}`;
+        const options = {
+            method: ApiMethods.GET,
+            headers: HEADERS,
+        }
+        
+        const response = await fetch(url, options);
+        if (response.status === 200) {
+            const data = await response.json();
+            return data;
+        } else {
+            throw new Error(`Request failed with status ${response.status}`);
+        }
+    },
+
+    fetchPostsByGroupId: async (group_id: string) => {
+        const url = `${API_BASE_URL}/v1/post/${group_id}`;
+        const options = {
+            method: ApiMethods.GET,
+            headers: HEADERS,
+        }
+        
+        const response = await fetch(url, options);
+        if (response.status === 200) {
+            const data = await response.json();
+            return data;
+        } else {
+            throw new Error(`Request failed with status ${response.status}`);
+        }
+    }
 
     // Define other API methods here
 };

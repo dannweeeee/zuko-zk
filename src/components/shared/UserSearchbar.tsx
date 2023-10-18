@@ -6,7 +6,7 @@ import { useState } from "react";
 import { Input } from "../ui/input";
 import { Button } from "../ui/button";
 import UserCard from "../cards/UserCard";
-import UserList from "./UserList";
+import UserList from "../lists/UserList";
 
 interface UserData {
     username: string;

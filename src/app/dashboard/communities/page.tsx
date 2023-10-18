@@ -1,5 +1,3 @@
-import { redirect } from "next/navigation";
-
 import CommunitySearchbar from "@/components/shared/CommunitySearchbar";
 
 async function Page() {

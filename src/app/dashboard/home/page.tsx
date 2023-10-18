@@ -1,13 +1,11 @@
-import React from 'react'
+import PostsList from '@/components/lists/PostsList'
 
-type Props = {}
-
-const page = (props: Props) => {
+const page = () => {
   return (
     <>
         <h1 className='head-text text-left'>Home</h1>
         <section className='mt-9 flex flex-col gap-10'>
-        
+          <PostsList />
         </section>
     </>
   )

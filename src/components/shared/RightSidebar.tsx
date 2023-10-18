@@ -1,4 +1,4 @@
-import CommunityList from "./CommunityList";
+import CommunityList from "../lists/CommunityList";
 
 async function RightSidebar() {
 

@@ -6,7 +6,7 @@ import { useState } from "react";
 import { Input } from "../ui/input";
 import { Button } from "../ui/button";
 import CommunityCard from "../cards/CommunityCard";
-import CommunityList from "./CommunityList";
+import CommunityList from "../lists/CommunityList";
 
 interface ApiResponse {
   meta: {

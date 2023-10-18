@@ -2,7 +2,7 @@
 
 import ApiService from "@/ApiService";
 import { useEffect, useState } from "react";
-import CommunityView from "./CommunityView";
+import CommunityView from "../views/CommunityView";
 
 interface ApiResponse {
     meta: {
