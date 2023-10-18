@@ -45,7 +45,7 @@ function CommunitySearchbar() {
           id="text"
           value={groupId}
           onChange={(e) => setGroupId(e.target.value)}
-          placeholder={"Input groupId..."}
+          placeholder={"Enter GroupID..."}
           className="no-focus searchbar_input"
         />
         <Button className="gap-5" onClick={handleCommunitySearch}>
