@@ -36,7 +36,7 @@ function CommunityViewCard({ groupid, name }: Props) {
             router.push(`/dashboard/communities/${groupid}`)
           }}
       >
-        Chat
+        View
       </Button>
     </article>
   );
