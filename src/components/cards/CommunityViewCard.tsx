@@ -6,11 +6,11 @@ import { useRouter } from "next/navigation";
 import { Button } from "../ui/button";
 
 interface Props {
-  vaultid: string;
-  username: string;
+  groupid: string;
+  name: string;
 }
 
-function UserCard({ vaultid, username }: Props) {
+function CommunityViewCard({ groupid, name }: Props) {
   const router = useRouter();
 
   return (
@@ -18,7 +18,7 @@ function UserCard({ vaultid, username }: Props) {
       <div className='user-card_avatar flex flex-wrap items-center gap-3'>
         <div className='relative h-12 w-12'>
           <Image
-            src={`https://api.multiavatar.com/${username}.png`}
+            src='/assets/apecoin-logo.png'
             alt='user_logo'
             fill
             className='rounded-full object-cover'
@@ -26,20 +26,20 @@ function UserCard({ vaultid, username }: Props) {
         </div>
 
         <div className='flex-1 text-ellipsis'>
-          <h4 className='font-semibold text-light-1'>{username}</h4>
+          <h4 className='font-semibold text-light-1'>{name}</h4>
         </div>
       </div>
-      <div className="h-5"></div>
-      {/* <Button
+
+      <Button
         className='user-card_btn'
         onClick={() => {
-            router.push(`/dashboard/profile/${vaultid}`)
+            router.push(`/dashboard/communities/${groupid}`)
           }}
       >
         Chat
-      </Button> */}
+      </Button>
     </article>
   );
 }
 
-export default UserCard;
+export default CommunityViewCard;

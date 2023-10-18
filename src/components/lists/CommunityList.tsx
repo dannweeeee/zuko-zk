@@ -2,7 +2,7 @@
 
 import ApiService from "@/ApiService";
 import { useEffect, useState } from "react";
-import CommunityView from "../views/CommunityView";
+import CommunityCard from "../cards/CommunityCard";
 
 interface ApiResponse {
     meta: {
@@ -34,7 +34,7 @@ const CommunityList = () => {
             {suggestedCommunities && suggestedCommunities.results && suggestedCommunities.results.length > 0 ? (
                 <>
                     {suggestedCommunities.results.map((result) => (
-                        <CommunityView
+                        <CommunityCard
                             key={result.community_id}
                             communityId={result.community_id}
                             description={result.description}

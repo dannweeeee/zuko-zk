@@ -15,6 +15,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { zodResolver } from '@hookform/resolvers/zod';
 
 import { usePathname, useRouter } from 'next/navigation';
+import { Input } from "../ui/input";
 
 interface Props {
   user: {
@@ -53,6 +54,12 @@ function PostPost({ userId }: { userId: string }) {
           name='thread'
           render={({ field }) => (
             <FormItem className='flex w-full flex-col gap-3'>
+              <FormLabel className='text-base-semibold text-light-2'>
+                Title
+              </FormLabel>
+              <FormControl className='no-focus border border-dark-4 bg-dark-3 text-light-1'>
+                <Input {...field} />
+              </FormControl>
               <FormLabel className='text-base-semibold text-light-2'>
                 Content
               </FormLabel>

@@ -1,4 +1,4 @@
-import CommunityList from "../lists/CommunityList";
+import CommunityView from "../views/CommunityView";
 
 async function RightSidebar() {
 
@@ -8,9 +8,8 @@ async function RightSidebar() {
         <h3 className='text-heading4-medium text-light-1'>
           Suggested Communities
         </h3>
-
         <div className='mt-7 flex w-[350px] flex-col gap-9'>
-          <CommunityList />
+          <CommunityView />
         </div>
       </div>
     </section>

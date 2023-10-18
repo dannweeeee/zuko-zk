@@ -4,43 +4,55 @@ import Image from "next/image";
 import { useRouter } from "next/navigation";
 
 import { Button } from "../ui/button";
+import { useEffect, useState } from "react";
+import ApiService from "@/ApiService";
+import UserCard from "../cards/UserCard";
+import CommunityViewCard from "../cards/CommunityViewCard";
 
-interface Props {
-    communityId: number;
+interface ApiResponse {
+  meta: {
+    duration: number;
+  };
+  success: boolean;
+  results: {
+    community_id: number;
     description: string;
-    groupId: string;
+    group_id: string;
     name: string;
-  }
+  }[];
+}
 
-function CommunityView({ communityId, description, groupId, name}: Props) {
+function CommunityView() {
   const router = useRouter();
+  const [suggestedCommunities, setSuggestedCommunities] = useState<ApiResponse | null>(null);
+
+  useEffect(() => {
+      const fetchData = async () => {
+          const data = await ApiService.fetchCommunities();
+          setSuggestedCommunities(data);
+          console.log('Communities Data:', data);
+      };
+      fetchData(); 
+  }, []);
 
   return (
-    <article className='user-card'>
-      <div className='user-card_avatar flex flex-wrap items-center gap-3'>
-        <div className='relative h-12 w-12'>
-            <Image
-                src='/assets/apecoin-logo.png'
-                alt='community_logo'
-                fill
-                className='rounded-full object-cover'
-            />
+    <div>
+            {suggestedCommunities && suggestedCommunities.results && suggestedCommunities.results.length > 0 ? (
+                <>
+                    {suggestedCommunities.results.map((result) => (
+                        <CommunityViewCard
+                            key={result.community_id}
+                            groupid={result.group_id}
+                            name={result.name}
+                        />
+                    ))}
+                </>
+            ) : (
+                <p className='!text-base-regular text-light-3'>
+                            No Communities Currently
+                </p>
+            )}
         </div>
-
-        <div className='flex-1 text-ellipsis'>
-            <h4 className='font-semibold text-light-1'>{name}</h4>
-        </div>
-      </div>
-
-      <Button
-        className='user-card_btn'
-        onClick={() => {
-            router.push(`/dashboard/profile/${groupId}`)
-          }}
-      >
-        View
-      </Button>
-    </article>
   );
 }
 

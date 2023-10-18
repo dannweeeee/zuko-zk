@@ -24,7 +24,7 @@ interface CommunityByUser {
 
 const PostsList = () => {
   return (
-    <div>PostsList</div>
+    <div>List of Posts</div>
   )
 }
 
