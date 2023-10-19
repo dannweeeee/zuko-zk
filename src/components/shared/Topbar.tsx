@@ -1,11 +1,11 @@
 "use client";
 
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { Button } from "../ui/button";
 import { AiOutlineCaretDown, AiOutlineCaretUp } from "react-icons/ai";
-import ApiService from "@/ApiService";
+import { useRouter } from "next/navigation";
 
 interface UserData {
   username: string;
@@ -13,14 +13,22 @@ interface UserData {
 }
 
 function Topbar() {
+  const router = useRouter();
   const [isOpen, setIsOpen] = useState(false);
-  const [vaultId, setVaultId] = useState('');
   const [userData, setUserData] = useState<UserData | null>(null);
 
-  const handleUserSearch = async () => {
-    const data = await ApiService.fetchUser(vaultId);
-    setUserData(data);
-    console.log('User Data:', data);
+  useEffect(() => {
+    const loggedInUser = localStorage.getItem("currentUser");
+    if (loggedInUser) {
+      const foundUser = JSON.parse(loggedInUser);
+      setUserData({ username: foundUser.user.username, vaultId: foundUser.user.vault_id });
+    }
+  }, []);
+
+  const logOutUser = () => {
+    localStorage.clear();
+    setUserData(null);
+    router.push('/');
   };
 
   return (
@@ -56,8 +64,8 @@ function Topbar() {
           </Button>
 
           {isOpen && (
-            <div className="bg-cyan-500 absolute top-20 flex flex-col items-start rounded-lg p-3">
-              <Link href="/" className="w-full gap-4 flex text-white">
+            <div className="absolute mt-8 flex flex-col items-start rounded-lg p-3">
+              <Button className="w-full gap-4 flex text-white" onClick={logOutUser}>
                 Logout
                 <Image
                   src="/assets/logout.svg"
@@ -65,7 +73,7 @@ function Topbar() {
                   width={20}
                   height={20}
                 />
-              </Link>
+              </Button>
             </div>
           )}
         </div>
