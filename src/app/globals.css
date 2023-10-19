@@ -143,6 +143,11 @@
   .community-card_btn {
     @apply rounded-lg bg-blue-500 px-5 py-1.5 !important;
   }
+
+  /* thread card  */
+  .thread-card_bar {
+    @apply relative mt-2 w-0.5 grow rounded-full bg-neutral-800;
+  }
 }
 
 @layer utilities {
