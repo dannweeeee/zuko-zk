@@ -76,13 +76,16 @@ function CreatePost() {
   };
 
   return (
-    <form onSubmit={handleSubmit(handleCreatePost)}>
-      <Input
+    <form onSubmit={handleSubmit(handleCreatePost)} className='mt-10 flex flex-col justify-start gap-5'>
+      <label className='font-semibold'>Title</label>
+      <Input 
         label="Title"
         {...(control as any).register('title', { required: 'Title is required' })}
       />
+      <label className='font-semibold'>Content</label>
       <Textarea
         label="Content"
+        rows={10}
         {...(control as any).register('content', { required: 'Content is required' })}
       />
       <Button type="submit" disabled={isCreatingPost}>

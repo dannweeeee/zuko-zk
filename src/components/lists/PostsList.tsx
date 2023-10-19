@@ -46,8 +46,6 @@ const PostsList = () => {
     }
   }, []);
 
-  
-
   useEffect(() => {
     if (groupId) {
       // Call the fetchPostsByGroupId API
@@ -76,7 +74,7 @@ const PostsList = () => {
   return (
     <section className='mt-9 flex flex-col gap-10'>
     {loading ? (
-      <p>Loading...</p>
+      <h1 className="font-semibold text-3xl text-center blue-text-gradient">Loading...</h1>
     ) : (
       posts.length > 0 ? (
         <>
