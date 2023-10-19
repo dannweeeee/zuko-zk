@@ -14,7 +14,7 @@ function CommunityViewCard({ groupid, name }: Props) {
   const router = useRouter();
 
   return (
-    <article className='user-card'>
+    <article className='user-card mt-8'>
       <div className='user-card_avatar flex flex-wrap items-center gap-3'>
         <div className='relative h-12 w-12'>
           <Image

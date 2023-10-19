@@ -161,6 +161,32 @@ const ApiService = {
         }
     },
 
+    createPost: async (title: string, content: string, vault_id: string, group_id: string) => {
+        const url = `${API_BASE_URL}/v1/post/`;
+        const options = {
+          method: ApiMethods.POST,
+          headers: HEADERS,
+          body: JSON.stringify({
+            title,
+            content,
+            vault_id,
+            group_id,
+            comments_count: 0,
+            likes_count: 0,
+            timestamp: Math.floor(Date.now() / 1000), // Using Unix timestamp
+          }),
+        };
+      
+        const response = await fetch(url, options);
+      
+        if (response.status === 200) {
+          const data = await response.json();
+          return data;
+        } else {
+          throw new Error(`Request failed with status ${response.status}`);
+        }
+      },
+
     // Define other API methods here
 };
 

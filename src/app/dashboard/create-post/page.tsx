@@ -1,5 +1,4 @@
-import PostPost from '@/components/forms/PostPost';
-import { redirect } from 'next/navigation';
+import CreatePost from '@/components/forms/CreatePost';
 
 async function Page() {
 
@@ -7,7 +6,7 @@ async function Page() {
         <>
           <h1 className='head-text'>Create Post</h1>
     
-          <PostPost userId={""} />
+          <CreatePost />
         </>
     );
 }

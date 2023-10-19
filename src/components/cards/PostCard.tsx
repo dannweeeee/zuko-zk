@@ -42,9 +42,10 @@ const PostCard = ({
                 </div>
                 <div className="flex w-full flex-col">
                     <Link href={`/profile/${vaultId}`} className="w-fit">
-                        <h4 className="cursor-pointer text-base-semibold text-light-1">{username}</h4>
+                        <h4 className="cursor-pointer font-semibold text-light-1">{username}</h4>
                     </Link>
-                    <p className="mt-2 text-small-regular text-light-2">{content}</p>
+                    <h1 className="mt-2 font-bold text-xl text-light-2">{title}</h1>
+                    <p className="mt-2 text-small-regular text-sm text-light-2">{content}</p>
                     <div className={`mt-5 flex flex-col gap-3`}>
                         <div className="flex gap3.5">
                             <Image src="/assets/heart-gray.svg" alt="heart" width={24} height={24} className="cursor-pointer object-contain"/>

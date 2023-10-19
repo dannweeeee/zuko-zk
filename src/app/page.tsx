@@ -23,7 +23,7 @@ export default function Home() {
       </Link>
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
         {loading ? (
-          <h1 className="font-semibold text-7xl text-center blue-text-gradient">
+          <h1 className="font-semibold text-5xl text-center blue-text-gradient">
             Loading...
           </h1>
         ) : (
