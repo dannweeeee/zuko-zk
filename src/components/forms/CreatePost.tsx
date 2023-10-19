@@ -1,17 +1,18 @@
-"use client"
+"use client";
 
-import { useRouter } from 'next/navigation';
-import { useEffect, useState } from 'react';
-import { useForm } from 'react-hook-form';
-import ApiService from '@/ApiService';
-import { Button } from '@/components/ui/button';
-import { Input } from '../ui/input';
-import { Textarea } from '@/components/ui/textarea';
-import { z, ZodError } from 'zod';
+import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
+import { useForm } from "react-hook-form";
+import ApiService from "@/ApiService";
+import { Button } from "@/components/ui/button";
+import { Input } from "../ui/input";
+import { Textarea } from "@/components/ui/textarea";
+import { z, ZodError } from "zod";
+import { getCookie } from "@/helper";
 
 const postSchema = z.object({
-  title: z.string().min(1, { message: 'Title is required' }),
-  content: z.string().min(1, { message: 'Content is required' }),
+  title: z.string().min(1, { message: "Title is required" }),
+  content: z.string().min(1, { message: "Content is required" }),
 });
 
 type PostForm = z.infer<typeof postSchema>;
@@ -29,18 +30,21 @@ function CreatePost() {
   const { control, handleSubmit } = useForm<PostForm>();
 
   useEffect(() => {
-    const loggedInUser = localStorage.getItem('currentUser');
-    if (loggedInUser) {
-      const foundUser = JSON.parse(loggedInUser);
-      setUserData({ username: foundUser.user.username, vaultId: foundUser.user.vault_id });
+    const loggedInUser = getCookie();
 
-      ApiService.fetchCommunityByVaultId(foundUser.user.vault_id)
+    if (loggedInUser) {
+      setUserData({
+        username: loggedInUser.username,
+        vaultId: loggedInUser.vault_id,
+      });
+
+      ApiService.fetchCommunityByVaultId(loggedInUser.vault_id)
         .then((response) => {
           setGroupId(response.results?.[0]?.group_id || null);
-          console.log('GroupID:', response.results?.[0]?.group_id);
+          console.log("GroupID:", response.results?.[0]?.group_id);
         })
         .catch((error) => {
-          console.error('Error fetching communities by vault ID:', error);
+          console.error("Error fetching communities by vault ID:", error);
         });
     }
   }, []);
@@ -53,22 +57,22 @@ function CreatePost() {
       postSchema.parse(data);
 
       // If validation passes, proceed with creating the post
-      console.log('Creating post with data:', data);
+      console.log("Creating post with data:", data);
       const post = await ApiService.createPost(
         data.title,
         data.content,
-        userData?.vaultId || '',
-        groupId || ''
+        userData?.vaultId || "",
+        groupId || ""
       );
-      console.log('Post created:', post);
-      router.push('/dashboard/home');
+      console.log("Post created:", post);
+      router.push("/dashboard/home");
     } catch (error) {
       if (error instanceof ZodError) {
         // Handle Zod validation errors
-        console.error('Validation error:', error.errors);
+        console.error("Validation error:", error.errors);
       } else {
         // Handle other errors
-        console.error('Error creating post:', error);
+        console.error("Error creating post:", error);
       }
     } finally {
       setIsCreatingPost(false);
@@ -76,20 +80,27 @@ function CreatePost() {
   };
 
   return (
-    <form onSubmit={handleSubmit(handleCreatePost)} className='mt-10 flex flex-col justify-start gap-5'>
-      <label className='font-semibold'>Title</label>
-      <Input 
+    <form
+      onSubmit={handleSubmit(handleCreatePost)}
+      className="mt-10 flex flex-col justify-start gap-5"
+    >
+      <label className="font-semibold">Title</label>
+      <Input
         label="Title"
-        {...(control as any).register('title', { required: 'Title is required' })}
+        {...(control as any).register("title", {
+          required: "Title is required",
+        })}
       />
-      <label className='font-semibold'>Content</label>
+      <label className="font-semibold">Content</label>
       <Textarea
         label="Content"
         rows={10}
-        {...(control as any).register('content', { required: 'Content is required' })}
+        {...(control as any).register("content", {
+          required: "Content is required",
+        })}
       />
       <Button type="submit" disabled={isCreatingPost}>
-        {isCreatingPost ? 'Creating Post...' : 'Create Post'}
+        {isCreatingPost ? "Creating Post..." : "Create Post"}
       </Button>
     </form>
   );

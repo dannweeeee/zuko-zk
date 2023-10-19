@@ -3,14 +3,15 @@
 import TypewriterTitle from "@/components/shared/TypewriterTitle";
 import { Button } from "@/components/ui/button";
 import SismoButton from "@/components/ui/sismoConnectButton";
+import { getCookie } from "@/helper";
 import { ArrowRight } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
 
 export default function Home() {
-  console.log("brääää");
   const [loading, setLoading] = useState(false);
+  const cookie = getCookie();
   return (
     <div className="bg-gradient-to-r min-h-screen from-blue-100 to-teal-100">
       <Link href="/" className="absolute px-6 py-3">
@@ -46,7 +47,9 @@ export default function Home() {
             </h3>
             <div className="mt-8"></div>
             <div className="flex justify-center">
-              <SismoButton loading={loading} setLoading={setLoading} />
+              {cookie ? null : (
+                <SismoButton loading={loading} setLoading={setLoading} />
+              )}
             </div>
           </div>
         )}

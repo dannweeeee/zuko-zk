@@ -1,13 +1,12 @@
 "use client";
 
 import ApiService from "@/ApiService";
+import { setCookie } from "@/helper";
 import { claims } from "@/sismoConstants";
 // react page
 import {
   SismoConnectButton,
-  SismoConnectConfig,
   AuthType,
-  ClaimType,
   SismoConnectResponse,
 } from "@sismo-core/sismo-connect-react";
 import { useRouter } from "next/navigation";
@@ -23,19 +22,26 @@ export default function SismoButton(props: any) {
   ) => {
     setLoading(true);
     const res = await ApiService.verifySismoProofBackend(sismoResponse);
-    console.log(res, "wats response in apiservice??");
     if (res.jwt) {
       setLoading(false);
       handleLogin(res);
     }
   };
 
-  const handleLogin = (signInResult: any) => {
+  const handleLogin = async (signInResult: any) => {
     setUserLoggedIn(true);
-    const { vaultId, jwt, newUser } = signInResult;
-    console.log(signInResult, "signInResult BRÄ");
-    localStorage.setItem('currentUser', JSON.stringify(signInResult));
-    router.push(`/dashboard/home/?vaultId=${vaultId}&jwt=${jwt}&newUser=${newUser}`);
+    const { vaultId, jwt, newUser, user } = signInResult;
+    if (newUser) {
+      router.push(
+        `/onboarding/?vaultId=${vaultId}&jwt=${jwt}&newUser=${newUser}`
+      );
+    } else {
+      await setCookie({
+        vault_id: user.vault_id,
+        username: user.username,
+      });
+      router.push(`/dashboard/home`);
+    }
   };
   return (
     <SismoConnectButton
@@ -48,7 +54,6 @@ export default function SismoButton(props: any) {
       auths={[{ authType: AuthType.VAULT }]}
       claims={claims}
       onResponse={async (response: SismoConnectResponse) => {
-        console.log("Getting response... BRÄ ");
         await verifySismoProofBackend(response);
       }}
     />

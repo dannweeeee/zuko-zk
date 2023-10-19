@@ -5,6 +5,7 @@ import { Button } from "../ui/button";
 import Cookies from "universal-cookie";
 import { useRouter } from "next/navigation";
 import ApiService from "@/ApiService";
+import { setCookie } from "@/helper";
 
 interface AuthUser {
   vaultId: string | null;
@@ -16,7 +17,7 @@ function AuthUser() {
   const [isOpen, setIsOpen] = useState(false);
   const [user, setUser] = useState<AuthUser | null>(null);
   const [userName, setUserName] = useState("");
-  const [success, setSuccess] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const cookies = new Cookies();
   const router = useRouter();
@@ -29,24 +30,24 @@ function AuthUser() {
       jwt: searchParams.get("jwt"),
       newUser: searchParams.get("newUser"),
     });
-    //Add auth token to cookies
-    cookies.set("jwt", searchParams.get("jwt"));
-  }, [success]);
+  }, [loading]);
 
   const handleSubmitUsername = async () => {
+    setLoading(true);
     if (user) {
       const res = await ApiService.createUser(user.vaultId as string, userName);
+      console.log(res, "wats res?");
       if (res) {
         setUser(null); // set user to null again
-        setSuccess(
-          "You successfully created a user. You can now access your communities"
-        );
+        await setCookie({
+          vault_id: res.vault_id,
+          username: userName,
+        });
+        setLoading(false);
         router.push("/dashboard/home");
       }
     }
   };
-
-  console.log(user, "what is user state? BRÄ");
 
   return (
     <div>
@@ -68,10 +69,12 @@ function AuthUser() {
             className="no-focus searchbar_input"
           />
           <br></br>
+
           <Button className="gap-5" onClick={handleSubmitUsername}>
             Submit
           </Button>
-          {success}
+          <br></br>
+          {loading ? <p>Loading...</p> : null}
         </div>
       ) : null}
     </div>

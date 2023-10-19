@@ -25,7 +25,6 @@ export default function RootLayout({
           <LeftSidebar />
           <section className="main-container">
             <div className="w-full max-w-4xl">{children}</div>
-            <AuthUser />
           </section>
 
           <div className="verticalLine"></div>

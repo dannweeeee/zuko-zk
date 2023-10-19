@@ -1,8 +1,9 @@
-"use client"
+"use client";
 
 import ApiService from "@/ApiService";
 import { useEffect, useState } from "react";
 import PostCard from "../cards/PostCard";
+import { getCookie } from "@/helper";
 
 interface UserData {
   username: string;
@@ -10,18 +11,17 @@ interface UserData {
 }
 
 interface PostsByCommunity {
-    post_id: number;
-    title: string;
-    content: string;
-    timestamp: number;
-    likes_count: number;
-    comments_count: number;
-    vault_id: string;
-    group_id: string;
+  post_id: number;
+  title: string;
+  content: string;
+  timestamp: number;
+  likes_count: number;
+  comments_count: number;
+  vault_id: string;
+  group_id: string;
 }
 
 const PostsList = () => {
-
   const [userData, setUserData] = useState<UserData | null>(null);
   const [groupId, setGroupId] = useState<string | null>(null);
   const [posts, setPosts] = useState<PostsByCommunity[]>([]);
@@ -29,20 +29,23 @@ const PostsList = () => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const loggedInUser = localStorage.getItem("currentUser");
+    const loggedInUser = getCookie();
+    console.log(loggedInUser, "Loggedin user");
     if (loggedInUser) {
-      const foundUser = JSON.parse(loggedInUser);
-      setUserData({ username: foundUser.user.username, vaultId: foundUser.user.vault_id });
+      setUserData({
+        username: loggedInUser.username,
+        vaultId: loggedInUser.vault_id,
+      });
 
       // Call the fetchCommunityByVaultId API
-      ApiService.fetchCommunityByVaultId(foundUser.user.vault_id)
-      .then(response => {
-        setGroupId(response.results[0].group_id);
-        console.log('GroupID:', response.results[0].group_id);
-      })
-      .catch(error => {
-        console.error('Error fetching communities by vault ID:', error);
-      });
+      ApiService.fetchCommunityByVaultId(loggedInUser.vault_id)
+        .then((response) => {
+          setGroupId(response.results[0].group_id);
+          console.log("GroupID:", response.results[0].group_id);
+        })
+        .catch((error) => {
+          console.error("Error fetching communities by vault ID:", error);
+        });
     }
   }, []);
 
@@ -50,12 +53,12 @@ const PostsList = () => {
     if (groupId) {
       // Call the fetchPostsByGroupId API
       ApiService.fetchPostsByGroupId(groupId)
-        .then(response => {
+        .then((response) => {
           setPosts(response);
-          console.log('Posts:', response);
+          console.log("Posts:", response);
         })
-        .catch(error => {
-          console.error('Error fetching posts by group ID:', error);
+        .catch((error) => {
+          console.error("Error fetching posts by group ID:", error);
         });
     }
   }, [groupId]);
@@ -63,7 +66,9 @@ const PostsList = () => {
   useEffect(() => {
     if (posts.length > 0) {
       const fetchUsernames = async () => {
-        const usernames = await Promise.all(posts.map(post => ApiService.fetchUser(post.vault_id)));
+        const usernames = await Promise.all(
+          posts.map((post) => ApiService.fetchUser(post.vault_id))
+        );
         setUsernames(usernames);
         setLoading(false);
       };
@@ -72,11 +77,12 @@ const PostsList = () => {
   }, [posts]);
 
   return (
-    <section className='mt-9 flex flex-col gap-10'>
-    {loading ? (
-      <h1 className="font-semibold text-3xl text-center blue-text-gradient">Loading...</h1>
-    ) : (
-      posts.length > 0 ? (
+    <section className="mt-9 flex flex-col gap-10">
+      {loading ? (
+        <h1 className="font-semibold text-3xl text-center blue-text-gradient">
+          Loading...
+        </h1>
+      ) : posts.length > 0 ? (
         <>
           {posts.map((post, index) => (
             <PostCard
@@ -89,18 +95,17 @@ const PostsList = () => {
               comments_count={post.comments_count}
               vaultId={post.vault_id}
               groupId={post.group_id}
-              username={usernames[index] ? usernames[index].username : ''}
+              username={usernames[index] ? usernames[index].username : ""}
             />
           ))}
         </>
       ) : (
-        <p className='!text-base-regular text-light-3 no-result'>
-            No Posts Currently
+        <p className="!text-base-regular text-light-3 no-result">
+          No Posts Currently
         </p>
-      )
-    )}
-  </section>
-  )
-}
+      )}
+    </section>
+  );
+};
 
-export default PostsList
+export default PostsList;
