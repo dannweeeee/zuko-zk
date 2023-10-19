@@ -143,7 +143,23 @@ const ApiService = {
         } else {
             throw new Error(`Request failed with status ${response.status}`);
         }
-    }
+    },
+
+    fetchCommentsByPostId: async (post_id: number) => {
+        const url = `${API_BASE_URL}/v1/comment/${post_id}`;
+        const options = {
+            method: ApiMethods.GET,
+            headers: HEADERS,
+        }
+        
+        const response = await fetch(url, options);
+        if (response.status === 200) {
+            const data = await response.json();
+            return data;
+        } else {
+            throw new Error(`Request failed with status ${response.status}`);
+        }
+    },
 
     // Define other API methods here
 };
