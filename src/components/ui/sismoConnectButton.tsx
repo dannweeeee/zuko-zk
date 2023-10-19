@@ -37,7 +37,6 @@ export default function SismoButton(props: any) {
       );
     } else {
       await setCookie({
-        jwt: user.jwt,
         vault_id: user.vault_id,
         username: user.username,
       });

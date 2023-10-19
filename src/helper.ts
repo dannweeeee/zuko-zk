@@ -5,7 +5,7 @@ export const getCookie = () => {
     return cookies.get("currentUser")
 }
 
-export const setCookie = async (currentUser: { username: string; jwt: string; vault_id: string }) => {
+export const setCookie = async (currentUser: { username: string; vault_id: string }) => {
     return cookies.set("currentUser", currentUser)
 }
 

@@ -30,6 +30,7 @@ const PostsList = () => {
 
   useEffect(() => {
     const loggedInUser = getCookie();
+    console.log(loggedInUser, "Loggedin user");
     if (loggedInUser) {
       setUserData({
         username: loggedInUser.username,
