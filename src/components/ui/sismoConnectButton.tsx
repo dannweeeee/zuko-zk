@@ -23,7 +23,6 @@ export default function SismoButton(props: any) {
   ) => {
     setLoading(true);
     const res = await ApiService.verifySismoProofBackend(sismoResponse);
-    console.log(res, "wats response in apiservice??");
     if (res.jwt) {
       setLoading(false);
       handleLogin(res);
@@ -33,9 +32,9 @@ export default function SismoButton(props: any) {
   const handleLogin = (signInResult: any) => {
     setUserLoggedIn(true);
     const { vaultId, jwt, newUser } = signInResult;
-    console.log(signInResult, "signInResult BRÄ");
-    localStorage.setItem('currentUser', JSON.stringify(signInResult));
-    router.push(`/dashboard/home/?vaultId=${vaultId}&jwt=${jwt}&newUser=${newUser}`);
+    router.push(
+      `/onboarding/?vaultId=${vaultId}&jwt=${jwt}&newUser=${newUser}`
+    );
   };
   return (
     <SismoConnectButton
@@ -48,7 +47,6 @@ export default function SismoButton(props: any) {
       auths={[{ authType: AuthType.VAULT }]}
       claims={claims}
       onResponse={async (response: SismoConnectResponse) => {
-        console.log("Getting response... BRÄ ");
         await verifySismoProofBackend(response);
       }}
     />

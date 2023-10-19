@@ -21,14 +21,18 @@ function Topbar() {
     const loggedInUser = localStorage.getItem("currentUser");
     if (loggedInUser) {
       const foundUser = JSON.parse(loggedInUser);
-      setUserData({ username: foundUser.user.username, vaultId: foundUser.user.vault_id });
+      console.log(foundUser, "wats found user?");
+      setUserData({
+        username: foundUser.username,
+        vaultId: foundUser.vault_id,
+      });
     }
   }, []);
 
   const logOutUser = () => {
     localStorage.clear();
     setUserData(null);
-    router.push('/');
+    router.push("/");
   };
 
   return (
@@ -65,7 +69,10 @@ function Topbar() {
 
           {isOpen && (
             <div className="absolute mt-8 flex flex-col items-start rounded-lg p-3">
-              <Button className="w-full gap-4 flex text-white" onClick={logOutUser}>
+              <Button
+                className="w-full gap-4 flex text-white"
+                onClick={logOutUser}
+              >
                 Logout
                 <Image
                   src="/assets/logout.svg"

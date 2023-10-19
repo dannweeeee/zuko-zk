@@ -16,7 +16,7 @@ function AuthUser() {
   const [isOpen, setIsOpen] = useState(false);
   const [user, setUser] = useState<AuthUser | null>(null);
   const [userName, setUserName] = useState("");
-  const [success, setSuccess] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const cookies = new Cookies();
   const router = useRouter();
@@ -29,24 +29,32 @@ function AuthUser() {
       jwt: searchParams.get("jwt"),
       newUser: searchParams.get("newUser"),
     });
-    //Add auth token to cookies
-    cookies.set("jwt", searchParams.get("jwt"));
-  }, [success]);
+  }, [loading]);
 
   const handleSubmitUsername = async () => {
+    setLoading(true);
     if (user) {
       const res = await ApiService.createUser(user.vaultId as string, userName);
       if (res) {
         setUser(null); // set user to null again
-        setSuccess(
-          "You successfully created a user. You can now access your communities"
+        localStorage.setItem(
+          "currentUser",
+          JSON.stringify({
+            success: true,
+            vault_id: user.vaultId,
+            username: userName,
+          })
         );
+        console.log("Getting here, should route to dashboard now");
+
+        setLoading(false);
+
         router.push("/dashboard/home");
       }
     }
   };
 
-  console.log(user, "what is user state? BRÄ");
+  console.log(loading, "Loading state");
 
   return (
     <div>
@@ -68,10 +76,12 @@ function AuthUser() {
             className="no-focus searchbar_input"
           />
           <br></br>
+
           <Button className="gap-5" onClick={handleSubmitUsername}>
             Submit
           </Button>
-          {success}
+          <br></br>
+          {loading ? <p>Loading...</p> : null}
         </div>
       ) : null}
     </div>

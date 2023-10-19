@@ -2,7 +2,7 @@ import { SismoConnectResponse } from "@sismo-core/sismo-connect-react";
 
 // const API_BASE_URL = process.env.API_PRODUCTION_URL ? process.env.API_PRODUCTION_URL : 'http://localhost:3050';
 const API_BASE_URL = 'https://zuko-server-api.onrender.com';
-
+//const API_BASE_URL = "http://localhost:3050"
 const HEADERS = {
     'Content-Type': 'application/json',
 };
@@ -56,7 +56,7 @@ const ApiService = {
             method: ApiMethods.GET,
             headers: HEADERS,
         };
-    
+
         const response = await fetch(url, options);
         if (response.status === 200) {
             const data = await response.json();
@@ -112,14 +112,14 @@ const ApiService = {
             throw new Error(`Request failed with status ${response.status}`);
         }
     },
-    
+
     fetchCommunityByVaultId: async (vault_id: string) => {
         const url = `${API_BASE_URL}/v1/community/vault/${vault_id}`;
         const options = {
             method: ApiMethods.GET,
             headers: HEADERS,
         }
-        
+
         const response = await fetch(url, options);
         if (response.status === 200) {
             const data = await response.json();
@@ -135,7 +135,7 @@ const ApiService = {
             method: ApiMethods.GET,
             headers: HEADERS,
         }
-        
+
         const response = await fetch(url, options);
         if (response.status === 200) {
             const data = await response.json();
@@ -151,7 +151,7 @@ const ApiService = {
             method: ApiMethods.GET,
             headers: HEADERS,
         }
-        
+
         const response = await fetch(url, options);
         if (response.status === 200) {
             const data = await response.json();
@@ -164,28 +164,28 @@ const ApiService = {
     createPost: async (title: string, content: string, vault_id: string, group_id: string) => {
         const url = `${API_BASE_URL}/v1/post/`;
         const options = {
-          method: ApiMethods.POST,
-          headers: HEADERS,
-          body: JSON.stringify({
-            title,
-            content,
-            vault_id,
-            group_id,
-            comments_count: 0,
-            likes_count: 0,
-            timestamp: Math.floor(Date.now() / 1000), // Using Unix timestamp
-          }),
+            method: ApiMethods.POST,
+            headers: HEADERS,
+            body: JSON.stringify({
+                title,
+                content,
+                vault_id,
+                group_id,
+                comments_count: 0,
+                likes_count: 0,
+                timestamp: Math.floor(Date.now() / 1000), // Using Unix timestamp
+            }),
         };
-      
+
         const response = await fetch(url, options);
-      
+
         if (response.status === 200) {
-          const data = await response.json();
-          return data;
+            const data = await response.json();
+            return data;
         } else {
-          throw new Error(`Request failed with status ${response.status}`);
+            throw new Error(`Request failed with status ${response.status}`);
         }
-      },
+    },
 
     // Define other API methods here
 };
