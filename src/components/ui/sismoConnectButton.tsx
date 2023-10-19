@@ -32,9 +32,13 @@ export default function SismoButton(props: any) {
   const handleLogin = (signInResult: any) => {
     setUserLoggedIn(true);
     const { vaultId, jwt, newUser } = signInResult;
-    router.push(
-      `/onboarding/?vaultId=${vaultId}&jwt=${jwt}&newUser=${newUser}`
-    );
+    if (newUser) {
+      router.push(
+        `/onboarding/?vaultId=${vaultId}&jwt=${jwt}&newUser=${newUser}`
+      );
+    } else {
+      router.push(`/dashboard/home`);
+    }
   };
   return (
     <SismoConnectButton
