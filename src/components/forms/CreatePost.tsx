@@ -8,6 +8,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "../ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { z, ZodError } from "zod";
+import { getCookie } from "@/helper";
 
 const postSchema = z.object({
   title: z.string().min(1, { message: "Title is required" }),
@@ -29,15 +30,15 @@ function CreatePost() {
   const { control, handleSubmit } = useForm<PostForm>();
 
   useEffect(() => {
-    const loggedInUser = localStorage.getItem("currentUser");
+    const loggedInUser = getCookie();
+
     if (loggedInUser) {
-      const foundUser = JSON.parse(loggedInUser);
       setUserData({
-        username: foundUser.username,
-        vaultId: foundUser.vault_id,
+        username: loggedInUser.username,
+        vaultId: loggedInUser.vault_id,
       });
 
-      ApiService.fetchCommunityByVaultId(foundUser.user.vault_id)
+      ApiService.fetchCommunityByVaultId(loggedInUser.vault_id)
         .then((response) => {
           setGroupId(response.results?.[0]?.group_id || null);
           console.log("GroupID:", response.results?.[0]?.group_id);

@@ -5,6 +5,7 @@ import { Button } from "../ui/button";
 import Cookies from "universal-cookie";
 import { useRouter } from "next/navigation";
 import ApiService from "@/ApiService";
+import { setCookie } from "@/helper";
 
 interface AuthUser {
   vaultId: string | null;
@@ -35,20 +36,14 @@ function AuthUser() {
     setLoading(true);
     if (user) {
       const res = await ApiService.createUser(user.vaultId as string, userName);
-
       if (res) {
         setUser(null); // set user to null again
-        localStorage.setItem(
-          "currentUser",
-          JSON.stringify({
-            success: true,
-            vault_id: user.vaultId,
-            username: userName,
-          })
-        );
-
+        await setCookie({
+          jwt: res.jwt,
+          vault_id: res.vaultId,
+          username: userName,
+        });
         setLoading(false);
-
         router.push("/dashboard/home");
       }
     }

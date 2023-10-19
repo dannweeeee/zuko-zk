@@ -1,10 +1,7 @@
 import { redirect } from "next/navigation";
 
 async function Dashboard() {
-
-  return (
-    <div></div>
-  );
+  return <div></div>;
 }
 
 export default Dashboard;

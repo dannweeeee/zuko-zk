@@ -6,6 +6,7 @@ import Link from "next/link";
 import { Button } from "../ui/button";
 import { AiOutlineCaretDown, AiOutlineCaretUp } from "react-icons/ai";
 import { useRouter } from "next/navigation";
+import { clearCookie, getCookie } from "@/helper";
 
 interface UserData {
   username: string;
@@ -18,21 +19,22 @@ function Topbar() {
   const [userData, setUserData] = useState<UserData | null>(null);
 
   useEffect(() => {
-    const loggedInUser = localStorage.getItem("currentUser");
+    const loggedInUser = getCookie();
     if (loggedInUser) {
-      const foundUser = JSON.parse(loggedInUser);
-      console.log(foundUser, "wats found user?");
+      console.log(loggedInUser, "wats found user?");
       setUserData({
-        username: foundUser.username,
-        vaultId: foundUser.vault_id,
+        username: loggedInUser.username,
+        vaultId: loggedInUser.vault_id,
       });
     }
   }, []);
 
-  const logOutUser = () => {
-    localStorage.clear();
-    setUserData(null);
-    router.push("/");
+  const logOutUser = async () => {
+    console.log("Logoiut click");
+    clearCookie().then((res) => {
+      setUserData(null);
+      router.push("/");
+    });
   };
 
   return (

@@ -1,13 +1,12 @@
 "use client";
 
 import ApiService from "@/ApiService";
+import { setCookie } from "@/helper";
 import { claims } from "@/sismoConstants";
 // react page
 import {
   SismoConnectButton,
-  SismoConnectConfig,
   AuthType,
-  ClaimType,
   SismoConnectResponse,
 } from "@sismo-core/sismo-connect-react";
 import { useRouter } from "next/navigation";
@@ -37,14 +36,11 @@ export default function SismoButton(props: any) {
         `/onboarding/?vaultId=${vaultId}&jwt=${jwt}&newUser=${newUser}`
       );
     } else {
-      localStorage.setItem(
-        "currentUser",
-        JSON.stringify({
-          success: true,
-          vault_id: user.vault_id,
-          username: user.username,
-        })
-      );
+      await setCookie({
+        jwt: user.jwt,
+        vault_id: user.vault_id,
+        username: user.username,
+      });
       router.push(`/dashboard/home`);
     }
   };

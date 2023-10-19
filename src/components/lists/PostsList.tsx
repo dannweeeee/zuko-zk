@@ -3,6 +3,7 @@
 import ApiService from "@/ApiService";
 import { useEffect, useState } from "react";
 import PostCard from "../cards/PostCard";
+import { getCookie } from "@/helper";
 
 interface UserData {
   username: string;
@@ -28,16 +29,15 @@ const PostsList = () => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const loggedInUser = localStorage.getItem("currentUser");
+    const loggedInUser = getCookie();
     if (loggedInUser) {
-      const foundUser = JSON.parse(loggedInUser);
       setUserData({
-        username: foundUser.username,
-        vaultId: foundUser.vault_id,
+        username: loggedInUser.username,
+        vaultId: loggedInUser.vault_id,
       });
 
       // Call the fetchCommunityByVaultId API
-      ApiService.fetchCommunityByVaultId(foundUser.vault_id)
+      ApiService.fetchCommunityByVaultId(loggedInUser.vault_id)
         .then((response) => {
           setGroupId(response.results[0].group_id);
           console.log("GroupID:", response.results[0].group_id);
@@ -48,7 +48,6 @@ const PostsList = () => {
     }
   }, []);
 
-  console.log(groupId, "wats groupID?");
   useEffect(() => {
     if (groupId) {
       // Call the fetchPostsByGroupId API
