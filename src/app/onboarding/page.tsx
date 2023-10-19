@@ -8,7 +8,6 @@ import Link from "next/link";
 import { useState } from "react";
 
 export default function Onboarding() {
-  console.log("");
   const [loading, setLoading] = useState(false);
   return (
     <div className="bg-gradient-to-r min-h-screen from-blue-100 to-teal-100">

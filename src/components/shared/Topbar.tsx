@@ -21,7 +21,6 @@ function Topbar() {
   useEffect(() => {
     const loggedInUser = getCookie();
     if (loggedInUser) {
-      console.log(loggedInUser, "wats found user?");
       setUserData({
         username: loggedInUser.username,
         vaultId: loggedInUser.vault_id,
@@ -30,11 +29,9 @@ function Topbar() {
   }, []);
 
   const logOutUser = async () => {
-    console.log("Logoiut click");
-    clearCookie().then((res) => {
-      setUserData(null);
-      router.push("/");
-    });
+    await clearCookie();
+    setUserData(null);
+    router.push("/");
   };
 
   return (

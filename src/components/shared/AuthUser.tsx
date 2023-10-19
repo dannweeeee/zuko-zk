@@ -49,8 +49,6 @@ function AuthUser() {
     }
   };
 
-  console.log(loading, "Loading state");
-
   return (
     <div>
       {user?.newUser === "true" ? (

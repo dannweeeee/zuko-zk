@@ -24,7 +24,6 @@ const ApiService = {
         };
 
         const response = await fetch(url, options);
-        console.log(url, 'wats url???, response:', response);
 
         if (response.status === 200) {
             return response.json();
