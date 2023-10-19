@@ -48,6 +48,7 @@ const PostsList = () => {
     }
   }, []);
 
+  console.log(groupId, "wats groupID?");
   useEffect(() => {
     if (groupId) {
       // Call the fetchPostsByGroupId API

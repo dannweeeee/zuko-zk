@@ -29,14 +29,22 @@ export default function SismoButton(props: any) {
     }
   };
 
-  const handleLogin = (signInResult: any) => {
+  const handleLogin = async (signInResult: any) => {
     setUserLoggedIn(true);
-    const { vaultId, jwt, newUser } = signInResult;
+    const { vaultId, jwt, newUser, user } = signInResult;
     if (newUser) {
       router.push(
         `/onboarding/?vaultId=${vaultId}&jwt=${jwt}&newUser=${newUser}`
       );
     } else {
+      localStorage.setItem(
+        "currentUser",
+        JSON.stringify({
+          success: true,
+          vault_id: user.vault_id,
+          username: user.username,
+        })
+      );
       router.push(`/dashboard/home`);
     }
   };

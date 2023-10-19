@@ -35,6 +35,7 @@ function AuthUser() {
     setLoading(true);
     if (user) {
       const res = await ApiService.createUser(user.vaultId as string, userName);
+
       if (res) {
         setUser(null); // set user to null again
         localStorage.setItem(
@@ -45,7 +46,6 @@ function AuthUser() {
             username: userName,
           })
         );
-        console.log("Getting here, should route to dashboard now");
 
         setLoading(false);
 
