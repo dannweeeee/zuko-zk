@@ -25,6 +25,10 @@ const PostCard = ({
     groupId,
     username
 }: Props) => {
+    const formatDateString = (timestamp: number) => {
+        const date = new Date(timestamp * 1000); // Convert seconds to milliseconds
+        return date.toLocaleString(); // Adjust the format as needed
+      };
     return (
         <article className={`flex w-full flex-col rounded-xl`}>
         <div className="flex items-start justify-between">
@@ -59,6 +63,11 @@ const PostCard = ({
                 </div>
             </div>
         </div>
+        <p className="mt-2 text-small-regular text-sm text-light-2 font-semibold">
+            {formatDateString(timestamp)}
+            {" "} | {" "} 
+            GroupID: {groupId}
+        </p>
     </article>
     )
 }

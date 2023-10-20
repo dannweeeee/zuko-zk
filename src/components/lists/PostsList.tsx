@@ -27,6 +27,19 @@ interface PostsByCommunity {
   group_id: string;
 }
 
+interface CommunityDetails {
+  meta: {
+    duration: number;
+  };
+  success: boolean;
+  results: {
+    community_id: number;
+    description: string;
+    group_id: string;
+    name: string;
+  }[];
+}
+
 const PostsList = () => {
   const [userData, setUserData] = useState<UserData | null>(null);
   const [groupId, setGroupId] = useState<string | null>(null);
@@ -59,7 +72,7 @@ const PostsList = () => {
 
   useEffect(() => {
     if (communities.length > 0) {
-      const fetchPostsForAllCommunities = async () => {
+      const fetchPostsForUserCommunities = async () => {
         const posts = await Promise.all(
           communities.map(async (community) => {
             const communityPosts = await ApiService.fetchPostsByGroupId(community.group_id);
@@ -75,8 +88,7 @@ const PostsList = () => {
 
         setPosts(sortedPosts);
       };
-
-      fetchPostsForAllCommunities();
+      fetchPostsForUserCommunities();
     }
   }, [communities]);
 
