@@ -33,7 +33,7 @@ function CommunityCard({ communityId, description, groupId, name}: Props) {
       <p className='mt-4 text-subtle-medium text-gray-1'>{description}</p>
 
       <div className='mt-5 flex flex-wrap items-center justify-between gap-3'>
-        <Link href={`/communities/${groupId}`}>
+        <Link href={`/dashboard/community/${groupId}`}>
           <Button size='sm' className='community-card_btn'>
             View
           </Button>

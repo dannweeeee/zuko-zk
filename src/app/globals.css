@@ -105,8 +105,8 @@
     @apply rounded-lg px-5 py-1.5 !important;
   }
 
-  /* thread card  */
-  .thread-card_bar {
+  /* post card  */
+  .post-card_bar {
     @apply relative mt-2 w-0.5 grow rounded-full bg-neutral-800;
   }
 
@@ -271,7 +271,7 @@
 
 /* Tab */
 .tab {
-  @apply flex min-h-[50px] flex-1 items-center gap-3 data-[state=active]:bg-[#0e0e12] !important;
+  @apply flex min-h-[50px] flex-1 items-center gap-3 data-[state=active]:bg-[cyan] !important;
 }
 
 .no-focus {

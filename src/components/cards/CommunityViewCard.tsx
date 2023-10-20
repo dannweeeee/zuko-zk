@@ -33,7 +33,7 @@ function CommunityViewCard({ groupid, name }: Props) {
       <Button
         className='user-card_btn'
         onClick={() => {
-            router.push(`/dashboard/communities/${groupid}`)
+            router.push(`/dashboard/community/${groupid}`)
           }}
       >
         View
