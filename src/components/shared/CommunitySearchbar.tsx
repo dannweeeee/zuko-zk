@@ -26,7 +26,7 @@ function CommunitySearchbar() {
   const [communityData, setCommunityData] = useState<ApiResponse | null>(null);
 
   const handleCommunitySearch = async () => {
-    const data = await ApiService.fetchCommunity(groupId);
+    const data = await ApiService.fetchCommunityByGroupId(groupId);
     setCommunityData(data);
     console.log('Community Data:', data);
   };

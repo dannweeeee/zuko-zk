@@ -49,22 +49,6 @@ const ApiService = {
         }
     },
 
-    fetchUser: async (vault_id: string) => {
-        const url = `${API_BASE_URL}/v1/user/${vault_id}`;
-        const options = {
-            method: ApiMethods.GET,
-            headers: HEADERS,
-        };
-
-        const response = await fetch(url, options);
-        if (response.status === 200) {
-            const data = await response.json();
-            return { username: data.username, vaultId: vault_id };
-        } else {
-            throw new Error(`Request failed with status ${response.status}`);
-        }
-    },
-
     fetchUsers: async () => {
         const url = `${API_BASE_URL}/v1/user/`;
         const options = {
@@ -80,8 +64,24 @@ const ApiService = {
         }
     },
 
-    fetchCommunity: async (group_id: string) => {
-        const url = `${API_BASE_URL}/v1/community/group/${group_id}`;
+    fetchUserByVaultId: async (vault_id: string) => {
+        const url = `${API_BASE_URL}/v1/user/${vault_id}`;
+        const options = {
+            method: ApiMethods.GET,
+            headers: HEADERS,
+        };
+
+        const response = await fetch(url, options);
+        if (response.status === 200) {
+            const data = await response.json();
+            return { username: data.username, vaultId: vault_id };
+        } else {
+            throw new Error(`Request failed with status ${response.status}`);
+        }
+    },
+
+    fetchCommunities: async () => {
+        const url = `${API_BASE_URL}/v1/community/`;
         const options = {
             method: ApiMethods.GET,
             headers: HEADERS,
@@ -96,8 +96,8 @@ const ApiService = {
         }
     },
 
-    fetchCommunities: async () => {
-        const url = `${API_BASE_URL}/v1/community/`;
+    fetchCommunityByGroupId: async (group_id: string) => {
+        const url = `${API_BASE_URL}/v1/community/group/${group_id}`;
         const options = {
             method: ApiMethods.GET,
             headers: HEADERS,

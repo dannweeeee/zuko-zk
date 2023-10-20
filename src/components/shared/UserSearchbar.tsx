@@ -18,7 +18,7 @@ function UserSearchBar() {
   const [userData, setUserData] = useState<UserData | null>(null);
 
   const handleUserSearch = async () => {
-    const data = await ApiService.fetchUser(vaultId);
+    const data = await ApiService.fetchUserByVaultId(vaultId);
     setUserData(data);
     console.log('User Data:', data);
   };

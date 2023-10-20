@@ -84,7 +84,7 @@ const PostsList = () => {
     if (posts.length > 0) {
       const fetchUsernames = async () => {
         const usernames = await Promise.all(
-          posts.map((post) => ApiService.fetchUser(post.vault_id))
+          posts.map((post) => ApiService.fetchUserByVaultId(post.vault_id))
         );
         setUsernames(usernames);
         setLoading(false);
