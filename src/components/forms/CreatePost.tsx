@@ -22,12 +22,19 @@ interface UserData {
   vaultId: string;
 }
 
+interface Community {
+  group_id: string;
+  user_community_id: number;
+  vault_id: string;
+}
+
 function CreatePost() {
   const router = useRouter();
   const [userData, setUserData] = useState<UserData | null>(null);
   const [groupId, setGroupId] = useState<string | null>(null);
   const [isCreatingPost, setIsCreatingPost] = useState(false);
   const { control, handleSubmit } = useForm<PostForm>();
+  const [communities, setCommunities] = useState<Community[]>([]);
 
   useEffect(() => {
     const loggedInUser = getCookie();
@@ -40,8 +47,9 @@ function CreatePost() {
 
       ApiService.fetchCommunityByVaultId(loggedInUser.vault_id)
         .then((response) => {
+          setCommunities(response.results || []);
           setGroupId(response.results?.[0]?.group_id || null);
-          console.log("GroupID:", response.results?.[0]?.group_id);
+          console.log("Communities:", response.results);
         })
         .catch((error) => {
           console.error("Error fetching communities by vault ID:", error);
@@ -53,10 +61,10 @@ function CreatePost() {
     try {
       setIsCreatingPost(true);
 
-      // Validate the form data against the schema
+      // to validate the form data against the schema
       postSchema.parse(data);
 
-      // If validation passes, proceed with creating the post
+      // if validation passes, proceed with creating the post
       console.log("Creating post with data:", data);
       const post = await ApiService.createPost(
         data.title,
@@ -68,10 +76,10 @@ function CreatePost() {
       router.push("/dashboard/home");
     } catch (error) {
       if (error instanceof ZodError) {
-        // Handle Zod validation errors
+        // handle Zod validation errors
         console.error("Validation error:", error.errors);
       } else {
-        // Handle other errors
+        // handle other errors
         console.error("Error creating post:", error);
       }
     } finally {
@@ -84,6 +92,23 @@ function CreatePost() {
       onSubmit={handleSubmit(handleCreatePost)}
       className="mt-10 flex flex-col justify-start gap-5"
     >
+      <label className="font-semibold">Community</label>
+      <select
+        {...(control as any).register("group_id", {
+          required: "Community is required",
+        })}
+        className="border p-2"
+        value={groupId || ''}
+        onChange={(e) => setGroupId(e.target.value)}
+      >
+        <option value="">Select a Community</option>
+        {communities.map((community) => (
+          <option key={community.group_id} value={community.group_id}>
+            {community.group_id}
+          </option>
+        ))}
+      </select>
+
       <label className="font-semibold">Title</label>
       <Input
         label="Title"
@@ -91,6 +116,7 @@ function CreatePost() {
           required: "Title is required",
         })}
       />
+
       <label className="font-semibold">Content</label>
       <Textarea
         label="Content"

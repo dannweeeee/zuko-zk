@@ -10,6 +10,12 @@ interface UserData {
   vaultId: string;
 }
 
+interface Community {
+  group_id: string;
+  user_community_id: number;
+  vault_id: string;
+}
+
 interface PostsByCommunity {
   post_id: number;
   title: string;
@@ -27,6 +33,7 @@ const PostsList = () => {
   const [posts, setPosts] = useState<PostsByCommunity[]>([]);
   const [usernames, setUsernames] = useState<UserData[]>([]);
   const [loading, setLoading] = useState(true);
+  const [communities, setCommunities] = useState<Community[]>([]);
 
   useEffect(() => {
     const loggedInUser = getCookie();
@@ -38,10 +45,11 @@ const PostsList = () => {
       });
 
       // Call the fetchCommunityByVaultId API
-      ApiService.fetchCommunityByVaultId(loggedInUser.vault_id)
+     ApiService.fetchCommunityByVaultId(loggedInUser.vault_id)
         .then((response) => {
-          setGroupId(response.results[0].group_id);
-          console.log("GroupID:", response.results[0].group_id);
+          setCommunities(response.results || []);
+          setGroupId(response.results?.[0]?.group_id || null);
+          console.log("Communities:", response.results);
         })
         .catch((error) => {
           console.error("Error fetching communities by vault ID:", error);
@@ -50,18 +58,27 @@ const PostsList = () => {
   }, []);
 
   useEffect(() => {
-    if (groupId) {
-      // Call the fetchPostsByGroupId API
-      ApiService.fetchPostsByGroupId(groupId)
-        .then((response) => {
-          setPosts(response);
-          console.log("Posts:", response);
-        })
-        .catch((error) => {
-          console.error("Error fetching posts by group ID:", error);
-        });
+    if (communities.length > 0) {
+      const fetchPostsForAllCommunities = async () => {
+        const posts = await Promise.all(
+          communities.map(async (community) => {
+            const communityPosts = await ApiService.fetchPostsByGroupId(community.group_id);
+            return communityPosts;
+          })
+        );
+
+        // flatten the array of arrays into a single array of posts
+        const allPosts = posts.flat();
+
+        // sort the posts by timestamp in descending order (most recent first)
+        const sortedPosts = allPosts.sort((a, b) => b.timestamp - a.timestamp);
+
+        setPosts(sortedPosts);
+      };
+
+      fetchPostsForAllCommunities();
     }
-  }, [groupId]);
+  }, [communities]);
 
   useEffect(() => {
     if (posts.length > 0) {
