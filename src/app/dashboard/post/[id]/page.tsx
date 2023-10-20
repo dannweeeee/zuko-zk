@@ -1,6 +1,7 @@
 "use client"
 
 import PostCard from '@/components/cards/PostCard';
+import CreateComment from '@/components/forms/CreateComment';
 import CommentsList from '@/components/lists/CommentsList';
 import React, { useEffect, useState } from 'react';
 
@@ -68,7 +69,11 @@ const PostDetailPage = () => {
               )}
             </div>
             <div className="mt-10">
-               
+              {post && (
+                <CreateComment 
+                  postId={post?.postId}
+                />
+              )}
             </div>
         </section>
     </div>
