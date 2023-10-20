@@ -1,10 +1,45 @@
-import React from 'react'
+"use client";
 
-type Props = {}
+import ApiService from "@/ApiService";
+import { useEffect, useState } from "react";
+import UserCard from "../cards/UserCard";
 
-const MembersTab = (props: Props) => {
+interface UserData {
+    username: string;
+    vaultId: string;
+}
+
+const MembersTab = ({ group_id }: { group_id: string }) => {
+    const [users, setUsers] = useState<UserData[] | null>(null);
+
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const data = await ApiService.fetchUsers();
+                setUsers(data);
+                console.log('Users Data:', data);
+            } catch (error) {
+                console.error('Error fetching users:', error);
+            }
+        };
+
+        fetchData();
+    }, []);
+
   return (
-    <div>MembersTab</div>
+    <div className=" mt-8">
+        {users ? (
+                users.map((user) => (
+                    <UserCard
+                        key={user.vaultId}
+                        vaultid={user.vaultId}
+                        username={user.username}
+                    />
+                ))
+            ) : (
+                <p className='no-result'>No Result</p>
+            )}
+    </div>
   )
 }
 

@@ -5,6 +5,6 @@ export default function middleware(req: NextRequest) {
     let url = req.url
 
     if (!verify && url.includes('/dashboard')) {
-        return NextResponse.redirect("http://localhost:3002/");
+        return NextResponse.redirect("http://localhost:3000/");
     }
 }

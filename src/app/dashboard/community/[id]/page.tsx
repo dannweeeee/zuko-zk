@@ -42,7 +42,7 @@ async function CommunityDetailsPage({ params }: { params: { id: string }}) {
                         </TabsContent>
                         <TabsContent value="members" className="w-full text-light-1">
                             <MembersTab 
-                                
+                                group_id={params.id}
                             />
                         </TabsContent>
                 </Tabs>

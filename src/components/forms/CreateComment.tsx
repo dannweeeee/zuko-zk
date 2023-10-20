@@ -66,8 +66,6 @@ function CreatePost({ postId }: Props) {
         reset();
 
         router.push(`/dashboard/post/${postId}?${searchParams.toString()}` as string);
-        window.location.reload();
-        
     } catch (error) {
       if (error instanceof ZodError) {
         console.error("Validation error:", error.errors);
@@ -76,6 +74,7 @@ function CreatePost({ postId }: Props) {
       }
     } finally {
       setIsCreatingComment(false);
+      window.location.reload();
     }
   };
 

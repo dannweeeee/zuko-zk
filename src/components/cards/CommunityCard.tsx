@@ -14,19 +14,17 @@ function CommunityCard({ communityId, description, groupId, name}: Props) {
   return (
     <article className='community-card'>
       <div className='flex flex-wrap items-center gap-3'>
-        <Link href={`/communities/${groupId}`} className='relative h-12 w-12'>
+        <div className='relative h-12 w-12'>
           <Image
             src='/assets/apecoin-logo.png'
             alt='community_logo'
             fill
             className='rounded-full object-cover'
           />
-        </Link>
+        </div>
 
         <div>
-          <Link href={`/communities/${groupId}`}>
-            <h4 className='font-semibold text-light-1'>{name}</h4>
-          </Link>
+          <h4 className='font-semibold text-light-1'>{name}</h4>
         </div>
       </div>
 

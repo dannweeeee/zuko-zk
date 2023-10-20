@@ -44,7 +44,7 @@ const CommunityList = () => {
                     ))}
                 </>
             ) : (
-                <p className='!text-base-regular text-light-3'>
+                <p className="!text-base-regular text-light-3 no-result font-semibold">
                             No Communities Currently
                 </p>
             )}

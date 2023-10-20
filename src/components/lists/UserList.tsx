@@ -37,7 +37,7 @@ const UserList = () => {
                     />
                 ))
             ) : (
-                <p className='no-result font-semibold'>No Result</p>
+                <p className='no-result mt-10'>No Result</p>
             )}
     </div>
   )
