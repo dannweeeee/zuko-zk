@@ -1,12 +1,9 @@
 import Image from 'next/image';
 import { communityTabs } from '@/constants';
-
 import ProfileHeader from '@/components/shared/ProfileHeader';
-import CommunityTab from '@/components/shared/CommunityTab';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import UserCard from '@/components/cards/UserCard';
-import { useState } from 'react';
-import ApiService from '@/ApiService';
+import PostsTab from '@/components/shared/PostsTab';
+import MembersTab from '@/components/shared/MembersTab';
 
 
 async function CommunityDetailsPage({ params }: { params: { id: string }}) {
@@ -39,10 +36,14 @@ async function CommunityDetailsPage({ params }: { params: { id: string }}) {
                         ))}
                     </TabsList>
                         <TabsContent value="posts" className="w-full text-light-1">
-                            <CommunityTab />
+                            <PostsTab 
+                                group_id={params.id}
+                            />
                         </TabsContent>
                         <TabsContent value="members" className="w-full text-light-1">
-                            <CommunityTab />
+                            <MembersTab 
+                                
+                            />
                         </TabsContent>
                 </Tabs>
             </div>

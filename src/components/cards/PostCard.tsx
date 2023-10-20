@@ -45,7 +45,7 @@ const PostCard = ({
                             className="cursor-pointer rounded-full"
                         />
                     </Link>
-                    <div className="thread-card_bar"/>
+                    <div className="post-card_bar"/>
                 </div>
                 <div className="flex w-full flex-col">
                     <Link href={`/profile/${vaultId}`} className="w-fit">

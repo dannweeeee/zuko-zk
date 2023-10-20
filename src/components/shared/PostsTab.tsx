@@ -27,7 +27,7 @@ interface PostsByCommunity {
   group_id: string;
 }
 
-const PostsList = () => {
+const PostsTab = ({ group_id }: { group_id: string }) => {
   const [userData, setUserData] = useState<UserData | null>(null);
   const [groupId, setGroupId] = useState<string | null>(null);
   const [posts, setPosts] = useState<PostsByCommunity[]>([]);
@@ -45,7 +45,7 @@ const PostsList = () => {
       });
 
       // Call the fetchCommunityByVaultId API
-     ApiService.fetchCommunityByVaultId(loggedInUser.vault_id)
+     ApiService.fetchCommunityByGroupId(group_id)
         .then((response) => {
           setCommunities(response.results || []);
           setGroupId(response.results?.[0]?.group_id || null);
@@ -55,7 +55,7 @@ const PostsList = () => {
           console.error("Error fetching communities by vault ID:", error);
         });
     }
-  }, []);
+  }, [group_id]);
 
   useEffect(() => {
     if (communities.length > 0) {
@@ -90,7 +90,7 @@ const PostsList = () => {
       };
       fetchUsernames();
     } else {
-      setLoading(false);
+        setLoading(false);
     }
   }, [posts]);
 
@@ -126,4 +126,4 @@ const PostsList = () => {
   );
 };
 
-export default PostsList;
+export default PostsTab;
