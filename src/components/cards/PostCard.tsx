@@ -1,6 +1,8 @@
-import { formatDateString } from "@/lib/utils";
+"use client"
+
 import Image from "next/image";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 
 interface Props {
     postId: number;
@@ -26,9 +28,10 @@ const PostCard = ({
     username
 }: Props) => {
     const formatDateString = (timestamp: number) => {
-        const date = new Date(timestamp * 1000); // Convert seconds to milliseconds
-        return date.toLocaleString(); // Adjust the format as needed
-      };
+        const date = new Date(timestamp * 1000); 
+        return date.toLocaleString();
+    };
+    const router = useRouter();
     return (
         <article className={`flex w-full flex-col rounded-xl`}>
         <div className="flex items-start justify-between">
@@ -53,9 +56,26 @@ const PostCard = ({
                     <div className={`mt-5 flex flex-col gap-3`}>
                         <div className="flex gap3.5">
                             <Image src="/assets/heart-gray.svg" alt="heart" width={24} height={24} className="cursor-pointer object-contain"/>
-                            <Link href={`/post/${postId}`}>
-                                <Image src="/assets/reply.svg" alt="reply" width={24} height={24} className="cursor-pointer object-contain"/>
-                            </Link>
+                            <Image 
+                                src="/assets/reply.svg" 
+                                alt="reply" width={24} 
+                                height={24} 
+                                className="cursor-pointer object-contain"
+                                onClick={() => {
+                                    const postObject = {
+                                        postId: String(postId),
+                                        title,
+                                        content,
+                                        timestamp: String(timestamp),
+                                        likes_count: String(likes_count),
+                                        comments_count: String(comments_count),
+                                        vaultId,
+                                        groupId,
+                                        username,
+                                    };
+                                    router.push(`/dashboard/post/${postId}?${new URLSearchParams(postObject).toString()}`);
+                                }}
+                                />
                             <Image src="/assets/repost.svg" alt="repost" width={24} height={24} className="cursor-pointer object-contain"/>
                             <Image src="/assets/share.svg" alt="share" width={24} height={24} className="cursor-pointer object-contain"/>
                         </div>
