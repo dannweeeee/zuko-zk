@@ -144,6 +144,32 @@ const ApiService = {
         }
     },
 
+    createPost: async (title: string, content: string, vault_id: string, group_id: string) => {
+        const url = `${API_BASE_URL}/v1/post/`;
+        const options = {
+            method: ApiMethods.POST,
+            headers: HEADERS,
+            body: JSON.stringify({
+                title,
+                content,
+                vault_id,
+                group_id,
+                comments_count: 0,
+                likes_count: 0,
+                timestamp: Math.floor(Date.now() / 1000), // Using Unix timestamp
+            }),
+        };
+
+        const response = await fetch(url, options);
+
+        if (response.status === 200) {
+            const data = await response.json();
+            return data;
+        } else {
+            throw new Error(`Request failed with status ${response.status}`);
+        }
+    },
+
     fetchCommentsByPostId: async (post_id: number) => {
         const url = `${API_BASE_URL}/v1/comment/${post_id}`;
         const options = {
@@ -160,19 +186,17 @@ const ApiService = {
         }
     },
 
-    createPost: async (title: string, content: string, vault_id: string, group_id: string) => {
-        const url = `${API_BASE_URL}/v1/post/`;
+    createComment: async (content: string, post_id: number, vault_id: string) => {
+        const url = `${API_BASE_URL}/v1/comment/`;
         const options = {
             method: ApiMethods.POST,
             headers: HEADERS,
             body: JSON.stringify({
-                title,
                 content,
-                vault_id,
-                group_id,
-                comments_count: 0,
                 likes_count: 0,
+                post_id,
                 timestamp: Math.floor(Date.now() / 1000), // Using Unix timestamp
+                vault_id,
             }),
         };
 
