@@ -1,6 +1,7 @@
 "use client"
 
 import PostCard from '@/components/cards/PostCard';
+import CommentsList from '@/components/lists/CommentsList';
 import React, { useEffect, useState } from 'react';
 
 interface PostCardProps {
@@ -60,7 +61,11 @@ const PostDetailPage = () => {
                 )}
             </div>
             <div className="mt-7">
-              
+              {post && (
+                <CommentsList 
+                  postId={post?.postId}
+                />
+              )}
             </div>
             <div className="mt-10">
                
