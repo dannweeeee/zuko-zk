@@ -74,8 +74,8 @@ function CreatePost({ postId }: Props) {
       }
     } finally {
       setIsCreatingComment(false);
-      window.location.reload();
     }
+    window.location.reload();
   };
 
   return (
