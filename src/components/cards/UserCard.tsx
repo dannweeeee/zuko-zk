@@ -26,18 +26,9 @@ function UserCard({ vaultid, username }: Props) {
         </div>
 
         <div className='flex-1 text-ellipsis'>
-          <h4 className='font-semibold text-light-1'>{username}</h4>
+          <h4 className='font-semibold text-light-1'>@{username}</h4>
         </div>
       </div>
-      <div className="h-5"></div>
-      {/* <Button
-        className='user-card_btn'
-        onClick={() => {
-            router.push(`/dashboard/profile/${vaultid}`)
-          }}
-      >
-        Chat
-      </Button> */}
     </article>
   );
 }

@@ -43,7 +43,7 @@ function UserSearchBar() {
           Search
         </Button>
       </div>
-      <div className="mt-5 flex flex-col gap-9rounded-lg p-5">
+      <div className="flex flex-col gap-9rounded-lg p-5">
         {userData ? (
           <>
             <UserCard
@@ -51,6 +51,7 @@ function UserSearchBar() {
               vaultid={userData.vaultId}
               username={userData.username}
             />
+            <hr />
           </>
         ) : (
           <div>
