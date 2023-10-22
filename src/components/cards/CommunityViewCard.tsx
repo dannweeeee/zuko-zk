@@ -9,25 +9,27 @@ import Link from "next/link";
 interface Props {
   groupid: string;
   name: string;
+  picture: string;
 }
 
-function CommunityViewCard({ groupid, name }: Props) {
+function CommunityViewCard({ groupid, name, picture }: Props) {
   const router = useRouter();
+  console.log(picture, "wats piccc?");
 
   return (
-    <article className='community-view-card mt-2 gap-10'>
+    <article className="community-view-card mt-2 gap-10">
       <Link href={`/dashboard/community/${groupid}`} className="cursor-pointer">
-        <div className='community-view-card_avatar flex flex-wrap items-center gap-3'>
-          <div className='relative h-12 w-12'>
+        <div className="community-view-card_avatar flex flex-wrap items-center gap-3">
+          <div className="relative h-12 w-12">
             <Image
-              src='/assets/apecoin-logo.png'
-              alt='user_logo'
+              src={picture}
+              alt="user_logo"
               fill
-              className='rounded-full object-cover'
+              className="rounded-full object-cover"
             />
           </div>
-          <div className='flex-1 text-ellipsis'>
-            <h4 className='font-semibold text-light-1'>{name}</h4>
+          <div className="flex-1 text-ellipsis">
+            <h4 className="font-semibold text-light-1">{name}</h4>
           </div>
         </div>
       </Link>

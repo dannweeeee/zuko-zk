@@ -19,14 +19,16 @@ interface ApiResponse {
     community_id: number;
     description: string;
     group_id: string;
+    picture_url: string;
     name: string;
   }[];
 }
 
 function CommunityView() {
   const router = useRouter();
-  const [suggestedCommunities, setSuggestedCommunities] = useState<ApiResponse | null>(null);
-  const [loading, setLoading] = useState(true); 
+  const [suggestedCommunities, setSuggestedCommunities] =
+    useState<ApiResponse | null>(null);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -43,6 +45,8 @@ function CommunityView() {
     fetchData();
   }, []);
 
+  console.log(suggestedCommunities, "SUGGESTED COMMUNITIES");
+
   return (
     <div>
       {loading ? (
@@ -55,6 +59,7 @@ function CommunityView() {
             <CommunityViewCard
               key={result.community_id}
               groupid={result.group_id}
+              picture={result.picture_url}
               name={result.name}
             />
           ))}

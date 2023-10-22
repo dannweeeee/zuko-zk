@@ -18,6 +18,7 @@ interface ApiResponse {
     description: string;
     group_id: string;
     name: string;
+    picture_url: string;
   }[];
 }
 
@@ -47,7 +48,10 @@ function CommunitySearchbar() {
           placeholder={"Enter GroupID..."}
           className="no-focus searchbar_input"
         />
-        <Button className="gap-5 bg-primary/10 hover:bg-primary/30" onClick={handleCommunitySearch} >
+        <Button
+          className="gap-5 bg-primary/10 hover:bg-primary/30"
+          onClick={handleCommunitySearch}
+        >
           Search
         </Button>
       </div>
@@ -55,6 +59,7 @@ function CommunitySearchbar() {
         {communityData ? (
           communityData.results.map((result) => (
             <CommunityCard
+              picture={result.picture_url}
               key={result.community_id}
               communityId={result.community_id}
               description={result.description}

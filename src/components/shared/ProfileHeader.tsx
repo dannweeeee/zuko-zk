@@ -20,6 +20,7 @@ interface CommunityDetails {
     description: string;
     group_id: string;
     name: string;
+    picture_url: string;
   }[];
 }
 
@@ -55,7 +56,7 @@ function ProfileHeader({ group_id }: Props) {
           <div className="flex items-center gap-3">
             <div className="relative h-20 w-20 object-cover">
               <Image
-                src="/assets/apecoin-logo.png"
+                src={communityData?.results[0].picture_url}
                 alt="logo"
                 fill
                 className="rounded-full object-cover shadow-2xl"

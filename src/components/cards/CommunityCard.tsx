@@ -8,16 +8,23 @@ interface Props {
   description: string;
   groupId: string;
   name: string;
+  picture: string;
 }
 
-function CommunityCard({ communityId, description, groupId, name }: Props) {
+function CommunityCard({
+  communityId,
+  picture,
+  description,
+  groupId,
+  name,
+}: Props) {
   return (
     <article className="user-card hover:bg-primary/5 p-5 rounded-lg cursor-pointer">
       <Link href={`/dashboard/community/${groupId}`}>
         <div className="flex flex-wrap items-center gap-3">
           <div className="relative h-12 w-12">
             <Image
-              src="/assets/apecoin-logo.png"
+              src={picture}
               alt="community_logo"
               fill
               className="rounded-full object-cover"
