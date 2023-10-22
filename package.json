@@ -13,6 +13,7 @@
     "@radix-ui/react-label": "^2.0.2",
     "@radix-ui/react-separator": "^1.0.3",
     "@radix-ui/react-slot": "^1.0.2",
+    "@radix-ui/react-tabs": "^1.0.4",
     "@sismo-core/sismo-connect-react": "^0.0.23",
     "@sismo-core/sismo-connect-server": "^0.0.23",
     "bufferutil": "^4.0.7",
@@ -24,6 +25,7 @@
     "react-dom": "^18",
     "react-hook-form": "^7.47.0",
     "react-icons": "^4.11.0",
+    "react-spinners": "^0.13.8",
     "tailwind-merge": "^1.14.0",
     "tailwindcss-animate": "^1.0.7",
     "typewriter-effect": "^2.21.0",
@@ -41,6 +43,7 @@
     "eslint-config-next": "13.5.4",
     "postcss": "^8",
     "tailwindcss": "^3",
+    "tailwindcss-bg-patterns": "^0.2.0",
     "typescript": "^5"
   }
 }

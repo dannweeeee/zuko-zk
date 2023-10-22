@@ -6,6 +6,7 @@ import Cookies from "universal-cookie";
 import { useRouter } from "next/navigation";
 import ApiService from "@/ApiService";
 import { setCookie } from "@/helper";
+import { HashLoader } from "react-spinners";
 
 interface AuthUser {
   vaultId: string | null;
@@ -36,7 +37,6 @@ function AuthUser() {
     setLoading(true);
     if (user) {
       const res = await ApiService.createUser(user.vaultId as string, userName);
-      console.log(res, "wats res?");
       if (res) {
         setUser(null); // set user to null again
         await setCookie({
@@ -74,7 +74,13 @@ function AuthUser() {
             Submit
           </Button>
           <br></br>
-          {loading ? <p>Loading...</p> : null}
+          {loading ? 
+          <HashLoader 
+            className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full"
+            color="000000"
+            /> 
+            : null
+          }
         </div>
       ) : null}
     </div>

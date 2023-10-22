@@ -35,14 +35,14 @@ function Topbar() {
   };
 
   return (
-    <nav className="topbar">
-      <Link href="/" className="flex items-center gap-4">
-        <Image
-          src="/assets/logo-name.png"
-          alt="logo"
-          width={110}
-          height={110}
-        />
+    <nav className="topbar px-5 py-5">
+      <Link href="/" className="absolute">
+            <Image
+              src="/assets/zuko-logo-white-nobg.png"
+              alt="logo"
+              width={165}
+              height={165}
+            />
       </Link>
 
       <div className="flex items-center gap-1">
@@ -68,17 +68,14 @@ function Topbar() {
 
           {isOpen && (
             <div className="absolute mt-8 flex flex-col items-start rounded-lg p-3">
-              <Button
-                className="w-full gap-4 flex text-white"
-                onClick={logOutUser}
-              >
-                Logout
+              <Button className="gap-5 flex text-black" onClick={logOutUser}>
                 <Image
                   src="/assets/logout.svg"
                   alt="logout"
                   width={20}
                   height={20}
                 />
+                Logout
               </Button>
             </div>
           )}

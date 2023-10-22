@@ -3,108 +3,66 @@
 import ApiService from "@/ApiService";
 import { useEffect, useState } from "react";
 import PostCard from "../cards/PostCard";
-import { getCookie } from "@/helper";
+import useGetLoggedInUser from "@/hooks/useGetLoggedInUser";
+import SkeletonLoading from "../ui/SkeletonLoading";
 
-interface UserData {
-  username: string;
-  vaultId: string;
+interface Community {
+  group_id: string;
+  user_community_id: number;
+  vault_id: string;
 }
 
 interface PostsByCommunity {
-  post_id: number;
-  title: string;
-  content: string;
-  timestamp: number;
-  likes_count: number;
   comments_count: number;
-  vault_id: string;
+  content: string;
   group_id: string;
+  hasLiked: number;
+  likes_count: number;
+  post_id: number;
+  timestamp: number;
+  title: string;
+  username: string;
+  vault_id: string;
 }
 
 const PostsList = () => {
-  const [userData, setUserData] = useState<UserData | null>(null);
-  const [groupId, setGroupId] = useState<string | null>(null);
-  const [posts, setPosts] = useState<PostsByCommunity[]>([]);
-  const [usernames, setUsernames] = useState<UserData[]>([]);
+  const [posts, setPosts] = useState<PostsByCommunity[] | null>(null);
   const [loading, setLoading] = useState(true);
 
+  const { loggedInUser } = useGetLoggedInUser();
+  
   useEffect(() => {
-    const loggedInUser = getCookie();
-    console.log(loggedInUser, "Loggedin user");
-    if (loggedInUser) {
-      setUserData({
-        username: loggedInUser.username,
-        vaultId: loggedInUser.vault_id,
-      });
-
-      // Call the fetchCommunityByVaultId API
-      ApiService.fetchCommunityByVaultId(loggedInUser.vault_id)
-        .then((response) => {
-          setGroupId(response.results[0].group_id);
-          console.log("GroupID:", response.results[0].group_id);
-        })
-        .catch((error) => {
+    const fetchAllPostsForAllCommunitiesUserIsAPartOf = async () => {
+      if (loggedInUser) {
+        try {
+          const allPosts =
+            await ApiService.fetchPostsByGroupIdAndGetLikedByVaultId(
+              loggedInUser.vault_id
+            );
+          setPosts(allPosts);
+        } catch (error) {
           console.error("Error fetching communities by vault ID:", error);
-        });
-    }
-  }, []);
-
-  useEffect(() => {
-    if (groupId) {
-      // Call the fetchPostsByGroupId API
-      ApiService.fetchPostsByGroupId(groupId)
-        .then((response) => {
-          setPosts(response);
-          console.log("Posts:", response);
-        })
-        .catch((error) => {
-          console.error("Error fetching posts by group ID:", error);
-        });
-    }
-  }, [groupId]);
-
-  useEffect(() => {
-    if (posts.length > 0) {
-      const fetchUsernames = async () => {
-        const usernames = await Promise.all(
-          posts.map((post) => ApiService.fetchUser(post.vault_id))
-        );
-        setUsernames(usernames);
-        setLoading(false);
-      };
-      fetchUsernames();
-    }
-  }, [posts]);
+        } finally {
+          // Set loading to false after the data has been fetched or an error occurred
+          setLoading(false);
+        }
+      }
+    };
+    fetchAllPostsForAllCommunitiesUserIsAPartOf();
+  }, [loggedInUser]);
 
   return (
-    <section className="mt-9 flex flex-col gap-10">
-      {loading ? (
-        <h1 className="font-semibold text-3xl text-center blue-text-gradient">
-          Loading...
-        </h1>
-      ) : posts.length > 0 ? (
-        <>
-          {posts.map((post, index) => (
-            <PostCard
-              key={post.post_id}
-              postId={post.post_id}
-              title={post.title}
-              content={post.content}
-              timestamp={post.timestamp}
-              likes_count={post.likes_count}
-              comments_count={post.comments_count}
-              vaultId={post.vault_id}
-              groupId={post.group_id}
-              username={usernames[index] ? usernames[index].username : ""}
-            />
-          ))}
-        </>
+    <section className="mt-2 flex flex-col">
+    {loading ? (
+      <SkeletonLoading />
+    ) : (
+      posts && posts.length > 0 ? (
+        posts.map((post, index) => <PostCard key={post.post_id} post={post} />)
       ) : (
-        <p className="!text-base-regular text-light-3 no-result">
-          No Posts Currently
-        </p>
-      )}
-    </section>
+        <p>No Posts Currently</p>
+      )
+    )}
+  </section>
   );
 };
 

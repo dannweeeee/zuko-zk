@@ -22,24 +22,23 @@ interface ApiResponse {
 }
 
 function CommunitySearchbar() {
-  const [groupId, setGroupId] = useState('');
+  const [groupId, setGroupId] = useState("");
   const [communityData, setCommunityData] = useState<ApiResponse | null>(null);
 
   const handleCommunitySearch = async () => {
-    const data = await ApiService.fetchCommunity(groupId);
+    const data = await ApiService.fetchCommunityByGroupId(groupId);
     setCommunityData(data);
-    console.log('Community Data:', data);
   };
 
   return (
     <div>
-      <div className='searchbar'>
+      <div className="searchbar">
         <Image
-          src='/assets/search-gray.svg'
-          alt='search'
-          width={24}
-          height={24}
-          className='object-contain'
+          src="/assets/magnifying-glass-solid.svg"
+          alt="search"
+          width={22}
+          height={22}
+          className="object-contain"
         />
         <Input
           id="text"
@@ -48,12 +47,12 @@ function CommunitySearchbar() {
           placeholder={"Enter GroupID..."}
           className="no-focus searchbar_input"
         />
-        <Button className="gap-5" onClick={handleCommunitySearch}>
-              Search
-        </Button> 
+        <Button className="gap-5 bg-primary/10 hover:bg-primary/30" onClick={handleCommunitySearch} >
+          Search
+        </Button>
       </div>
-      <div className='mt-5 flex flex-col gap-9 rounded-lg p-5'>
-      {communityData ? (
+      <div className="flex flex-col gap-9 rounded-lg p-5">
+        {communityData ? (
           communityData.results.map((result) => (
             <CommunityCard
               key={result.community_id}

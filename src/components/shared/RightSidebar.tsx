@@ -8,7 +8,7 @@ async function RightSidebar() {
         <h3 className='font-bold text-light-1'>
           Suggested Communities
         </h3>
-        <div className='mt-7 flex w-[350px] flex-col gap-9'>
+        <div className='flex w-[350px] flex-col gap-9'>
           <CommunityView />
         </div>
       </div>

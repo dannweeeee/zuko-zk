@@ -12,33 +12,25 @@ interface Props {
 
 function CommunityCard({ communityId, description, groupId, name}: Props) {
   return (
-    <article className='community-card'>
+    <article className='user-card hover:bg-primary/5 p-5 rounded-lg cursor-pointer'>
+      <Link href={`/dashboard/community/${groupId}`}>
       <div className='flex flex-wrap items-center gap-3'>
-        <Link href={`/communities/${groupId}`} className='relative h-12 w-12'>
+        <div className='relative h-12 w-12'>
           <Image
             src='/assets/apecoin-logo.png'
             alt='community_logo'
             fill
             className='rounded-full object-cover'
           />
-        </Link>
+        </div>
 
         <div>
-          <Link href={`/communities/${groupId}`}>
-            <h4 className='font-semibold text-light-1'>{name}</h4>
-          </Link>
+          <h4 className='font-bold text-light-1'>{name}</h4>
         </div>
       </div>
 
-      <p className='mt-4 text-subtle-medium text-gray-1'>{description}</p>
-
-      <div className='mt-5 flex flex-wrap items-center justify-between gap-3'>
-        <Link href={`/communities/${groupId}`}>
-          <Button size='sm' className='community-card_btn'>
-            View
-          </Button>
-        </Link>
-      </div>
+      <p className='mt-4 text-subtle-medium font-semibold text-gray-1'>{description}</p>
+      </Link>
     </article>
   );
 }
