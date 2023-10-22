@@ -9,29 +9,28 @@ import UserCard from "../cards/UserCard";
 import UserList from "../lists/UserList";
 
 interface UserData {
-    username: string;
-    vaultId: string;
+  username: string;
+  vaultId: string;
 }
 
 function UserSearchBar() {
-  const [vaultId, setVaultId] = useState('');
+  const [vaultId, setVaultId] = useState("");
   const [userData, setUserData] = useState<UserData | null>(null);
 
   const handleUserSearch = async () => {
     const data = await ApiService.fetchUserByVaultId(vaultId);
     setUserData(data);
-    console.log('User Data:', data);
   };
 
   return (
     <div>
-      <div className='searchbar'>
+      <div className="searchbar">
         <Image
-          src='/assets/search-gray.svg'
-          alt='search'
+          src="/assets/search-gray.svg"
+          alt="search"
           width={24}
           height={24}
-          className='object-contain'
+          className="object-contain"
         />
         <Input
           id="text"
@@ -41,23 +40,23 @@ function UserSearchBar() {
           className="no-focus searchbar_input"
         />
         <Button className="gap-5" onClick={handleUserSearch}>
-              Search
+          Search
         </Button>
       </div>
-      <div className='mt-5 flex flex-col gap-9rounded-lg p-5'>
-        { userData ? (
-            <>
-              <UserCard
-                key={userData.vaultId}
-                vaultid={userData.vaultId}
-                username={userData.username}
-              />
-            </>
-          ) : (
-            <div>
-              <UserList />
-            </div>
-          )}
+      <div className="mt-5 flex flex-col gap-9rounded-lg p-5">
+        {userData ? (
+          <>
+            <UserCard
+              key={userData.vaultId}
+              vaultid={userData.vaultId}
+              username={userData.username}
+            />
+          </>
+        ) : (
+          <div>
+            <UserList />
+          </div>
+        )}
       </div>
     </div>
   );

@@ -24,35 +24,37 @@ interface ApiResponse {
 
 function CommunityView() {
   const router = useRouter();
-  const [suggestedCommunities, setSuggestedCommunities] = useState<ApiResponse | null>(null);
+  const [suggestedCommunities, setSuggestedCommunities] =
+    useState<ApiResponse | null>(null);
 
   useEffect(() => {
-      const fetchData = async () => {
-          const data = await ApiService.fetchCommunities();
-          setSuggestedCommunities(data);
-          console.log('Communities Data:', data);
-      };
-      fetchData(); 
+    const fetchData = async () => {
+      const data = await ApiService.fetchCommunities();
+      setSuggestedCommunities(data);
+    };
+    fetchData();
   }, []);
 
   return (
     <div>
-            {suggestedCommunities && suggestedCommunities.results && suggestedCommunities.results.length > 0 ? (
-                <>
-                    {suggestedCommunities.results.map((result) => (
-                        <CommunityViewCard
-                            key={result.community_id}
-                            groupid={result.group_id}
-                            name={result.name}
-                        />
-                    ))}
-                </>
-            ) : (
-                <p className='!text-base-regular text-light-3'>
-                            No Communities Currently
-                </p>
-            )}
-        </div>
+      {suggestedCommunities &&
+      suggestedCommunities.results &&
+      suggestedCommunities.results.length > 0 ? (
+        <>
+          {suggestedCommunities.results.map((result) => (
+            <CommunityViewCard
+              key={result.community_id}
+              groupid={result.group_id}
+              name={result.name}
+            />
+          ))}
+        </>
+      ) : (
+        <p className="!text-base-regular text-light-3">
+          No Communities Currently
+        </p>
+      )}
+    </div>
   );
 }
 

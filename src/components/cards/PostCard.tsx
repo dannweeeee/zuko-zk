@@ -27,11 +27,9 @@ const PostCard = ({ post }: Props) => {
   const handleUpVotePost = async (postId: number) => {
     if (loggedInUser) {
       if (!post.hasLiked) {
-        console.log("U upvoted!");
         setHasLiked(1);
         await ApiService.likePost(loggedInUser.vault_id, postId);
       } else {
-        console.log("Coming here to unlike");
         setHasLiked(0);
         await ApiService.unLikePost(loggedInUser.vault_id, postId);
       }

@@ -14,7 +14,6 @@ export function useGetLoggedInUser() {
         if (!loggedInUser) {
           setLoading(true);
           const _loggedInUser = getCookie();
-          console.log(_loggedInUser, "loggedin user?");
           setLoggedInUser(_loggedInUser);
           setLoading(false);
         }
@@ -24,7 +23,6 @@ export function useGetLoggedInUser() {
     };
     fetchUserFromCookie();
   }, [loggedInUser]);
-  console.log(loggedInUser, "LOGGED IN USEEER?");
 
   return { loggedInUser, loading };
 }

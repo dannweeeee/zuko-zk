@@ -36,7 +36,6 @@ function AuthUser() {
     setLoading(true);
     if (user) {
       const res = await ApiService.createUser(user.vaultId as string, userName);
-      console.log(res, "wats res?");
       if (res) {
         setUser(null); // set user to null again
         await setCookie({

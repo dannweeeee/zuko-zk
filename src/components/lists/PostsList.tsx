@@ -3,7 +3,6 @@
 import ApiService from "@/ApiService";
 import { useEffect, useState } from "react";
 import PostCard from "../cards/PostCard";
-import { getCookie } from "@/helper";
 import useGetLoggedInUser from "@/hooks/useGetLoggedInUser";
 
 interface Community {
@@ -39,7 +38,6 @@ const PostsList = () => {
             await ApiService.fetchPostsByGroupIdAndGetLikedByVaultId(
               loggedInUser.vault_id
             );
-          console.log(allPosts, "all POSTS?");
           setPosts(allPosts);
           setLoading(false);
         } catch (error) {

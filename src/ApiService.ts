@@ -128,8 +128,8 @@ const ApiService = {
         }
     },
 
-    fetchPostsByGroupId: async (group_id: string) => {
-        const url = `${API_BASE_URL}/v1/post/${group_id}`;
+    fetchPostsByGroupId: async (group_id: string, vault_id: string) => {
+        const url = `${API_BASE_URL}/v1/post/${group_id}/user/${vault_id}`;
         const options = {
             method: ApiMethods.GET,
             headers: HEADERS,
@@ -203,7 +203,7 @@ const ApiService = {
         const options = {
             method: ApiMethods.POST,
             headers: HEADERS,
-            body: JSON.stringify({ vault_id, post_id: comment_id }),
+            body: JSON.stringify({ vault_id, comment_id }),
         };
 
         const response = await fetch(url, options);
@@ -261,8 +261,8 @@ const ApiService = {
         }
     },
 
-    fetchCommentsByPostId: async (post_id: number) => {
-        const url = `${API_BASE_URL}/v1/comment/${post_id}`;
+    fetchCommentsByPostId: async (post_id: number, vault_id: string) => {
+        const url = `${API_BASE_URL}/v1/comment/${post_id}/user/${vault_id}`;
         const options = {
             method: ApiMethods.GET,
             headers: HEADERS,

@@ -2,6 +2,7 @@ import ApiService from "@/ApiService";
 import React, { useEffect, useState } from "react";
 import CommentCard from "../cards/CommentCard";
 import { Comment } from "@/types";
+import useGetLoggedInUser from "@/hooks/useGetLoggedInUser";
 
 interface Props {
   postId: number;
@@ -10,22 +11,27 @@ interface Props {
 const CommentsList = ({ postId }: Props) => {
   const [comments, setComments] = useState<Comment[] | null>(null);
   const [loading, setLoading] = useState(false);
+  const { loggedInUser } = useGetLoggedInUser();
 
   useEffect(() => {
     const fetchComments = async () => {
-      try {
-        setLoading(true);
-        const data = await ApiService.fetchCommentsByPostId(postId);
-        setComments(data);
-        console.log("Comments:", data);
-        setLoading(false);
-      } catch (error) {
-        console.error("Error fetching comments:", error);
+      if (loggedInUser) {
+        try {
+          setLoading(true);
+          const data = await ApiService.fetchCommentsByPostId(
+            postId,
+            loggedInUser.vault_id
+          );
+          setComments(data);
+          setLoading(false);
+        } catch (error) {
+          console.error("Error fetching comments:", error);
+        }
       }
     };
 
     fetchComments();
-  }, [postId]);
+  }, [postId, loggedInUser]);
 
   return (
     <section className="mt-9 flex flex-col gap-10">

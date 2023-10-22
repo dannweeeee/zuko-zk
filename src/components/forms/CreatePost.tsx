@@ -9,6 +9,7 @@ import { Input } from "../ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { z, ZodError } from "zod";
 import { getCookie } from "@/helper";
+import useGetLoggedInUser from "@/hooks/useGetLoggedInUser";
 
 const postSchema = z.object({
   title: z.string().min(1, { message: "Title is required" }),
@@ -16,11 +17,6 @@ const postSchema = z.object({
 });
 
 type PostForm = z.infer<typeof postSchema>;
-
-interface UserData {
-  username: string;
-  vaultId: string;
-}
 
 interface Community {
   group_id: string;
@@ -30,21 +26,14 @@ interface Community {
 
 function CreatePost() {
   const router = useRouter();
-  const [userData, setUserData] = useState<UserData | null>(null);
   const [groupId, setGroupId] = useState<string | null>(null);
   const [isCreatingPost, setIsCreatingPost] = useState(false);
   const { control, handleSubmit } = useForm<PostForm>();
   const [communities, setCommunities] = useState<Community[]>([]);
+  const { loggedInUser } = useGetLoggedInUser();
 
   useEffect(() => {
-    const loggedInUser = getCookie();
-
     if (loggedInUser) {
-      setUserData({
-        username: loggedInUser.username,
-        vaultId: loggedInUser.vault_id,
-      });
-
       ApiService.fetchCommunityByVaultId(loggedInUser.vault_id)
         .then((response) => {
           setCommunities(response.results || []);
@@ -55,7 +44,7 @@ function CreatePost() {
           console.error("Error fetching communities by vault ID:", error);
         });
     }
-  }, []);
+  }, [loggedInUser]);
 
   const handleCreatePost = async (data: PostForm) => {
     try {
@@ -69,7 +58,7 @@ function CreatePost() {
       const post = await ApiService.createPost(
         data.title,
         data.content,
-        userData?.vaultId || "",
+        loggedInUser?.vault_id || "",
         groupId || ""
       );
       console.log("Post created:", post);
@@ -98,7 +87,7 @@ function CreatePost() {
           required: "Community is required",
         })}
         className="border p-2"
-        value={groupId || ''}
+        value={groupId || ""}
         onChange={(e) => setGroupId(e.target.value)}
       >
         <option value="">Select a Community</option>
