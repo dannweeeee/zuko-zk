@@ -18,7 +18,7 @@ function SkeletonLoading() {
           </div>
         </div>
       </div>
-      <div className="bg-[#cec8c4] shadow rounded-md p-2 w-full mt-5">
+      <div className="bg-[#d1cecc] shadow rounded-md p-2 w-full mt-5">
         <div className="animate-pulse flex gap-3">
           <div className="rounded-lg bg-[#EDEDE9] h-[100px] w-[100px]"></div>
           <div className="flex-1 space-y-2 py-3 ">

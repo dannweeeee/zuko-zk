@@ -3,6 +3,7 @@ import useGetLoggedInUser from "@/hooks/useGetLoggedInUser";
 import { Comment } from "@/types";
 import Image from "next/image";
 import React, { useEffect, useState } from "react";
+import TimeAgo from "../shared/TimeAgo";
 
 interface Props {
   key: number;
@@ -14,8 +15,6 @@ const CommentCard = ({ comment }: Props) => {
   const [likesCount, setLikesCount] = useState(comment.likes_count ?? 0);
 
   useEffect(() => {}, [hasLiked, likesCount]);
-
-  console.log(likesCount, "LIKESCOUNT", comment.content);
 
   const handleUpVotePost = async (commentId: number) => {
     if (loggedInUser) {
@@ -72,7 +71,10 @@ const CommentCard = ({ comment }: Props) => {
                   className="cursor-pointer object-contain"
                 />
                 <p className="ml-1 text-s text-light-2">{likesCount}</p>
-
+                <div className="ml-auto mr-12 mt-1 text-small-regular text-sm text-light-2">
+                  {" "}
+                  <TimeAgo timestamp={comment.timestamp} />
+                </div>
                 {/* <Image src="/assets/repost.svg" alt="repost" width={24} height={24} className="cursor-pointer object-contain"/>
                             <Image src="/assets/share.svg" alt="share" width={24} height={24} className="cursor-pointer object-contain"/> */}
               </div>
@@ -80,9 +82,6 @@ const CommentCard = ({ comment }: Props) => {
           </div>
         </div>
       </div>
-      <p className="mt-2 text-small-regular text-sm text-light-2 font-semibold">
-        {formatDateString(comment.timestamp)}
-      </p>
     </article>
   );
 };

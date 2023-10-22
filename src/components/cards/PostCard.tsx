@@ -54,6 +54,7 @@ const PostCard = ({ post }: Props) => {
       title,
       username,
       vault_id,
+      community_name,
     } = post;
 
     const queryParams = {
@@ -67,6 +68,7 @@ const PostCard = ({ post }: Props) => {
       title,
       username,
       vault_id,
+      community_name,
     };
 
     router.push(

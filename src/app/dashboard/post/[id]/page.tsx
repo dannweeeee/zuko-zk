@@ -21,6 +21,7 @@ const PostDetailPage = () => {
     const title = searchParams.get("title") || "";
     const username = searchParams.get("username") || "";
     const vault_id = searchParams.get("vault_id") || "";
+    const community_name = searchParams.get("community_name") || "";
 
     setPost({
       post_id,
@@ -32,6 +33,7 @@ const PostDetailPage = () => {
       timestamp,
       title,
       username,
+      community_name,
       vault_id,
     });
   }, []);
