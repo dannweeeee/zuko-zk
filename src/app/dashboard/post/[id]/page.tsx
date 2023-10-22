@@ -1,43 +1,38 @@
-"use client"
+"use client";
 
-import PostCard from '@/components/cards/PostCard';
-import CreateComment from '@/components/forms/CreateComment';
-import CommentsList from '@/components/lists/CommentsList';
-import React, { useEffect, useState } from 'react';
-
-interface PostCardProps {
-  postId: number;
-  title: string;
-  content: string;
-  timestamp: number;
-  likes_count: number;
-  comments_count: number;
-  vaultId: string;
-  groupId: string;
-  username: string;
-}
+import PostCard from "@/components/cards/PostCard";
+import CreateComment from "@/components/forms/CreateComment";
+import CommentsList from "@/components/lists/CommentsList";
+import { Post } from "@/types";
+import React, { useEffect, useState } from "react";
 
 const PostDetailPage = () => {
-  const [post, setPost] = useState<PostCardProps | null>(null);
-  
+  const [post, setPost] = useState<Post | null>(null);
+
   useEffect(() => {
     const searchParams = new URLSearchParams(window.location.search);
-
-    const postId = Number(searchParams.get("postId"));
-    const timestamp = Number(searchParams.get("timestamp"));
-    const likes_count = Number(searchParams.get("likes_count"));
+    const post_id = Number(searchParams.get("post_id"));
     const comments_count = Number(searchParams.get("comments_count"));
+    const content = searchParams.get("content") || "";
+    const group_id = searchParams.get("group_id") || "";
+    const hasLiked = Number(searchParams.get("hasLiked"));
+    const likes_count = Number(searchParams.get("likes_count"));
+    const timestamp = Number(searchParams.get("timestamp"));
+    const title = searchParams.get("title") || "";
+    const username = searchParams.get("username") || "";
+    const vault_id = searchParams.get("vault_id") || "";
 
     setPost({
-      postId,
-      title: searchParams.get("title") || '',
-      content: searchParams.get("content") || '',
-      timestamp,
-      likes_count,
+      post_id,
       comments_count,
-      vaultId: searchParams.get("vaultId") || '',
-      groupId: searchParams.get("groupId") || '',
-      username: searchParams.get("username") || '',
+      content,
+      group_id,
+      hasLiked,
+      likes_count,
+      timestamp,
+      title,
+      username,
+      vault_id,
     });
   }, []);
 
@@ -45,37 +40,15 @@ const PostDetailPage = () => {
 
   return (
     <div>
-         <section className="relative">
-            <div>
-                {post && (
-                  <PostCard
-                    postId={post.postId}
-                    title={post.title}
-                    content={post.content}
-                    timestamp={post.timestamp}
-                    likes_count={post.likes_count}
-                    comments_count={post.comments_count}
-                    vaultId={post.vaultId}
-                    groupId={post.groupId}
-                    username={post.username}
-                  />
-                )}
-            </div>
-            <div className="mt-7">
-              {post && (
-                <CommentsList 
-                  postId={post?.postId}
-                />
-              )}
-            </div>
-            <div className="mt-10">
-              {post && (
-                <CreateComment 
-                  postId={post?.postId}
-                />
-              )}
-            </div>
-        </section>
+      <section className="relative">
+        <div>{post && <PostCard key={post.post_id} post={post} />}</div>
+        <div className="mt-7">
+          {post && <CommentsList postId={post?.post_id} />}
+        </div>
+        <div className="mt-10">
+          {post && <CreateComment postId={post?.post_id} />}
+        </div>
+      </section>
     </div>
   );
 };

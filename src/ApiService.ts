@@ -144,6 +144,59 @@ const ApiService = {
         }
     },
 
+
+    fetchPostsByGroupIdAndGetLikedByVaultId: async (groupId: string, vaultId: string) => {
+        const url = `${API_BASE_URL}/v1/post/${groupId}/user/${vaultId}`;
+        const options = {
+            method: ApiMethods.GET,
+            headers: HEADERS,
+        }
+
+        const response = await fetch(url, options);
+        if (response.status === 200) {
+            const data = await response.json();
+            return data;
+        } else {
+            throw new Error(`Request failed with status ${response.status}`);
+        }
+    },
+
+    likePost: async (vault_id: string, post_id: number) => {
+        const url = `${API_BASE_URL}/v1/like/post`;
+        const options = {
+            method: ApiMethods.POST,
+            headers: HEADERS,
+            body: JSON.stringify({ vault_id, post_id }),
+        };
+
+        const response = await fetch(url, options);
+
+        if (response.status === 200) {
+            return response.json();
+        } else {
+            throw new Error(`Request failed with status ${response.status}`);
+        }
+
+    },
+
+    unLikePost: async (vault_id: string, post_id: number) => {
+        const url = `${API_BASE_URL}/v1/like/post`;
+        const options = {
+            method: ApiMethods.DELETE,
+            headers: HEADERS,
+            body: JSON.stringify({ vault_id, post_id }),
+        };
+
+        const response = await fetch(url, options);
+
+        if (response.status === 200) {
+            return response.json();
+        } else {
+            throw new Error(`Request failed with status ${response.status}`);
+        }
+
+    },
+
     createPost: async (title: string, content: string, vault_id: string, group_id: string) => {
         const url = `${API_BASE_URL}/v1/post/`;
         const options = {

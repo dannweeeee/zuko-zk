@@ -4,11 +4,7 @@ import ApiService from "@/ApiService";
 import { useEffect, useState } from "react";
 import PostCard from "../cards/PostCard";
 import { getCookie } from "@/helper";
-
-interface UserData {
-  username: string;
-  vaultId: string;
-}
+import useGetLoggedInUser from "@/hooks/useGetLoggedInUser";
 
 interface Community {
   group_id: string;
@@ -17,35 +13,29 @@ interface Community {
 }
 
 interface PostsByCommunity {
-  post_id: number;
-  title: string;
-  content: string;
-  timestamp: number;
-  likes_count: number;
   comments_count: number;
-  vault_id: string;
+  content: string;
   group_id: string;
+  hasLiked: number;
+  likes_count: number;
+  post_id: number;
+  timestamp: number;
+  title: string;
+  username: string;
+  vault_id: string;
 }
 
 const PostsList = () => {
-  const [userData, setUserData] = useState<UserData | null>(null);
   const [groupId, setGroupId] = useState<string | null>(null);
   const [posts, setPosts] = useState<PostsByCommunity[]>([]);
-  const [usernames, setUsernames] = useState<UserData[]>([]);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
   const [communities, setCommunities] = useState<Community[]>([]);
 
+  const { loggedInUser } = useGetLoggedInUser();
   useEffect(() => {
-    const loggedInUser = getCookie();
-    console.log(loggedInUser, "Loggedin user");
     if (loggedInUser) {
-      setUserData({
-        username: loggedInUser.username,
-        vaultId: loggedInUser.vault_id,
-      });
-
       // Call the fetchCommunityByVaultId API
-     ApiService.fetchCommunityByVaultId(loggedInUser.vault_id)
+      ApiService.fetchCommunityByVaultId(loggedInUser.vault_id)
         .then((response) => {
           setCommunities(response.results || []);
           setGroupId(response.results?.[0]?.group_id || null);
@@ -55,17 +45,22 @@ const PostsList = () => {
           console.error("Error fetching communities by vault ID:", error);
         });
     }
-  }, []);
+  }, [loggedInUser]);
 
   useEffect(() => {
-    if (communities.length > 0) {
-      const fetchPostsForUserCommunities = async () => {
+    if (communities.length > 0 && loggedInUser) {
+      const fetchAllPostsForAllCommunitiesUserIsAPartOf = async () => {
         const posts = await Promise.all(
           communities.map(async (community) => {
-            const communityPosts = await ApiService.fetchPostsByGroupId(community.group_id);
+            const communityPosts =
+              await ApiService.fetchPostsByGroupIdAndGetLikedByVaultId(
+                community.group_id,
+                loggedInUser.vault_id
+              );
             return communityPosts;
           })
         );
+        console.log(posts, "wats wrong with posts?");
 
         // flatten the array of arrays into a single array of posts
         const allPosts = posts.flat();
@@ -75,24 +70,9 @@ const PostsList = () => {
 
         setPosts(sortedPosts);
       };
-      fetchPostsForUserCommunities();
+      fetchAllPostsForAllCommunitiesUserIsAPartOf();
     }
   }, [communities]);
-
-  useEffect(() => {
-    if (posts.length > 0) {
-      const fetchUsernames = async () => {
-        const usernames = await Promise.all(
-          posts.map((post) => ApiService.fetchUserByVaultId(post.vault_id))
-        );
-        setUsernames(usernames);
-        setLoading(false);
-      };
-      fetchUsernames();
-    } else {
-      setLoading(false);
-    }
-  }, [posts]);
 
   return (
     <section className="mt-9 flex flex-col gap-10">
@@ -103,18 +83,7 @@ const PostsList = () => {
       ) : posts.length > 0 ? (
         <>
           {posts.map((post, index) => (
-            <PostCard
-              key={post.post_id}
-              postId={post.post_id}
-              title={post.title}
-              content={post.content}
-              timestamp={post.timestamp}
-              likes_count={post.likes_count}
-              comments_count={post.comments_count}
-              vaultId={post.vault_id}
-              groupId={post.group_id}
-              username={usernames[index] ? usernames[index].username : ""}
-            />
+            <PostCard key={post.post_id} post={post} />
           ))}
         </>
       ) : (

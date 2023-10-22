@@ -37,7 +37,6 @@ function CreatePost({ postId }: Props) {
   const { control, handleSubmit, reset } = useForm<PostForm>();
 
   useEffect(() => {
-
     const loggedInUser = getCookie();
 
     if (loggedInUser) {
@@ -50,22 +49,24 @@ function CreatePost({ postId }: Props) {
 
   const handleCreateComment = async (data: PostForm) => {
     try {
-        const searchParams = new URLSearchParams(window.location.search);
-        setIsCreatingComment(true);
-    
-        postSchema.parse(data);
-    
-        console.log("Creating comment with data:", data);
-        const comment = await ApiService.createComment(
-            data.content,
-            postId,
-            userData?.vaultId || "",
-        );
-        console.log("Comment created:", comment);
-    
-        reset();
+      const searchParams = new URLSearchParams(window.location.search);
+      setIsCreatingComment(true);
 
-        router.push(`/dashboard/post/${postId}?${searchParams.toString()}` as string);
+      postSchema.parse(data);
+
+      console.log("Creating comment with data:", data);
+      const comment = await ApiService.createComment(
+        data.content,
+        postId,
+        userData?.vaultId || ""
+      );
+      console.log("Comment created:", comment);
+
+      reset();
+
+      router.push(
+        `/dashboard/post/${postId}?${searchParams.toString()}` as string
+      );
     } catch (error) {
       if (error instanceof ZodError) {
         console.error("Validation error:", error.errors);
