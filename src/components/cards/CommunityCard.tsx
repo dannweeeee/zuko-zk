@@ -25,11 +25,11 @@ function CommunityCard({ communityId, description, groupId, name}: Props) {
         </div>
 
         <div>
-          <h4 className='font-semibold text-light-1'>{name}</h4>
+          <h4 className='font-bold text-light-1'>{name}</h4>
         </div>
       </div>
 
-      <p className='mt-4 text-subtle-medium text-gray-1'>{description}</p>
+      <p className='mt-4 text-subtle-medium font-semibold text-gray-1'>{description}</p>
       </Link>
     </article>
   );

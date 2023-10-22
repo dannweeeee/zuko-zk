@@ -71,8 +71,8 @@ const PostCard = ({ post }: Props) => {
   };
 
   return (
-    <article className={`flex w-full flex-col rounded-xl`}>
-      <a onClick={() => handleNavigateToComment(post)} className="hover:bg-primary/5 p-5 rounded-lg cursor-pointer">
+    <article className={`flex w-full flex-col hover:bg-primary/5 p-5 rounded-lg cursor-pointer`}>
+      <a onClick={() => handleNavigateToComment(post)}>
       <div className="flex items-start justify-between">
         <div className="flex w-full flex-1 flex-row gap-4">
           <div className="flex flex-col items-center">
@@ -121,13 +121,13 @@ const PostCard = ({ post }: Props) => {
           </div>
         </div>
       </div>
+      </a>
       <p className="mt-2 text-small-regular text-sm text-light-2 font-semibold">
         {formatDateString(post.timestamp)} |{" "}
         <Link href={`/dashboard/community/${post.group_id}`}>
           GroupID: {post.group_id}
         </Link>
       </p>
-      </a>
     </article>
   );
 };
