@@ -23,6 +23,7 @@ interface PostsByCommunity {
   title: string;
   username: string;
   vault_id: string;
+  community_name: string;
 }
 
 const PostsList = () => {
@@ -30,7 +31,7 @@ const PostsList = () => {
   const [loading, setLoading] = useState(true);
 
   const { loggedInUser } = useGetLoggedInUser();
-  
+
   useEffect(() => {
     const fetchAllPostsForAllCommunitiesUserIsAPartOf = async () => {
       if (loggedInUser) {
@@ -53,16 +54,14 @@ const PostsList = () => {
 
   return (
     <section className="mt-2 flex flex-col">
-    {loading ? (
-      <SkeletonLoading />
-    ) : (
-      posts && posts.length > 0 ? (
+      {loading ? (
+        <SkeletonLoading />
+      ) : posts && posts.length > 0 ? (
         posts.map((post, index) => <PostCard key={post.post_id} post={post} />)
       ) : (
         <p>No Posts Currently</p>
-      )
-    )}
-  </section>
+      )}
+    </section>
   );
 };
 
