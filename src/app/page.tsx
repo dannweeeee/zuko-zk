@@ -5,15 +5,23 @@ import SkeletonLoading from "@/components/ui/SkeletonLoading";
 import { Button } from "@/components/ui/button";
 import SismoButton from "@/components/ui/sismoConnectButton";
 import { getCookie } from "@/helper";
+import useGetLoggedInUser from "@/hooks/useGetLoggedInUser";
 import { ArrowRight } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { HashLoader } from "react-spinners";
 
 export default function Home() {
   const [loading, setLoading] = useState(false);
   const cookie = getCookie();
+  const router = useRouter();
+
+  const handleEnterZuko = () => {
+    router.push('/dashboard/home');
+  }
+
   return (
     <div className="w-screen h-screen circles">
       <nav className="topbar px-5 py-5">
@@ -74,9 +82,15 @@ export default function Home() {
             <h3 className="font-semibold text-2xl text-center text-black">
               <TypewriterTitle />
             </h3>
-            <div className="mt-8"></div>
+            <div className="mt-4"></div>
             <div className="flex justify-center">
-              {cookie ? null : (
+              {cookie ? 
+              <Button 
+                onClick={handleEnterZuko}
+                className="w-250 h-250 font-bold text-2xl bg-[#D5BDAF] rouded-lg"
+              >
+                Enter Zuko <ArrowRight size={30} />
+              </Button> : (
                 <SismoButton loading={loading} setLoading={setLoading} />
               )}
             </div>
