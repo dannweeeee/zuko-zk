@@ -71,7 +71,7 @@ function CreatePost({ postId }: Props) {
           required: "Content is required",
         })}
       />
-      <Button type="submit" disabled={isCreatingComment}>
+      <Button type="submit" disabled={isCreatingComment} className="bg-primary/10 hover:bg-primary/30">
         {isCreatingComment ? "Creating Comment..." : "Create Comment"}
       </Button>
     </form>

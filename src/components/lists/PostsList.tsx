@@ -49,7 +49,7 @@ const PostsList = () => {
   }, [loggedInUser]);
 
   return (
-    <section className="mt-9 flex flex-col gap-10">
+    <section className="mt-2 flex flex-col">
       {loading ? (
         <h1 className="font-semibold text-3xl text-center blue-text-gradient">
           Loading...

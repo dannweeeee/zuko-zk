@@ -114,7 +114,7 @@ function CreatePost() {
           required: "Content is required",
         })}
       />
-      <Button type="submit" disabled={isCreatingPost}>
+      <Button type="submit" disabled={isCreatingPost} className="bg-primary/10 hover:bg-primary/30">
         {isCreatingPost ? "Creating Post..." : "Create Post"}
       </Button>
     </form>

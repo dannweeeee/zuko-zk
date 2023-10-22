@@ -72,6 +72,7 @@ const PostCard = ({ post }: Props) => {
 
   return (
     <article className={`flex w-full flex-col rounded-xl`}>
+      <a onClick={() => handleNavigateToComment(post)} className="hover:bg-primary/5 p-5 rounded-lg cursor-pointer">
       <div className="flex items-start justify-between">
         <div className="flex w-full flex-1 flex-row gap-4">
           <div className="flex flex-col items-center">
@@ -115,8 +116,6 @@ const PostCard = ({ post }: Props) => {
                   className="cursor-pointer object-contain"
                   onClick={() => handleNavigateToComment(post)}
                 />
-                {/* <Image src="/assets/repost.svg" alt="repost" width={24} height={24} className="cursor-pointer object-contain"/>
-                            <Image src="/assets/share.svg" alt="share" width={24} height={24} className="cursor-pointer object-contain"/> */}
               </div>
             </div>
           </div>
@@ -128,6 +127,7 @@ const PostCard = ({ post }: Props) => {
           GroupID: {post.group_id}
         </Link>
       </p>
+      </a>
     </article>
   );
 };

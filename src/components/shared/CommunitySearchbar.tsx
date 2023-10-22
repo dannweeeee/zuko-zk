@@ -47,7 +47,7 @@ function CommunitySearchbar() {
           placeholder={"Enter GroupID..."}
           className="no-focus searchbar_input"
         />
-        <Button className="gap-5" onClick={handleCommunitySearch}>
+        <Button className="gap-5 bg-primary/10 hover:bg-primary/30" onClick={handleCommunitySearch} >
           Search
         </Button>
       </div>
