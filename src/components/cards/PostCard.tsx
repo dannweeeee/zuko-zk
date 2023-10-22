@@ -7,6 +7,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
+import TimeAgo from "../shared/TimeAgo";
 
 interface Props {
   key: number;
@@ -124,17 +125,19 @@ const PostCard = ({ post }: Props) => {
                   className="cursor-pointer object-contain"
                   onClick={() => handleNavigateToComment(post)}
                 />
+                <div className="ml-auto text-sm text-light-2">
+                  GroupID: {post.group_id} |{" "}
+                  <TimeAgo timestamp={post.timestamp} />
+                </div>
+                {/* <p className="mt-2 text-small-regular text-sm text-light-2 font-semibold">
+                  {formatDateString(post.timestamp)} |{" "}
+                  <Link href={`/dashboard/community/${post.group_id}`}></Link>
+                </p> */}
               </div>
             </div>
           </div>
         </div>
       </div>
-      <p className="mt-2 text-small-regular text-sm text-light-2 font-semibold">
-        {formatDateString(post.timestamp)} |{" "}
-        <Link href={`/dashboard/community/${post.group_id}`}>
-          GroupID: {post.group_id}
-        </Link>
-      </p>
     </article>
   );
 };
