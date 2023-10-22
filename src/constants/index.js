@@ -23,5 +23,5 @@ export const sidebarLinks = [
 
 export const communityTabs = [
   { value: "posts", label: "Posts", icon: "/assets/reply.svg" },
-  { value: "members", label: "Members", icon: "/assets/members.svg" },
+  // { value: "members", label: "Members", icon: "/assets/members.svg" },
 ];

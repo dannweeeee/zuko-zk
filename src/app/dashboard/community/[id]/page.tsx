@@ -32,9 +32,9 @@ async function CommunityDetailsPage({ params }: { params: { id: string } }) {
           <TabsContent value="posts" className="w-full text-light-1">
             <PostsTab group_id={params.id} />
           </TabsContent>
-          <TabsContent value="members" className="w-full text-light-1">
+          {/* <TabsContent value="members" className="w-full text-light-1">
             <MembersTab group_id={params.id} />
-          </TabsContent>
+          </TabsContent> */}
         </Tabs>
       </div>
     </section>

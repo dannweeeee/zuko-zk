@@ -72,10 +72,10 @@ const PostCard = ({ post }: Props) => {
 
   return (
     <article className={`flex w-full flex-col hover:bg-primary/5 p-5 rounded-lg cursor-pointer`}>
-      <a onClick={() => handleNavigateToComment(post)}>
       <div className="flex items-start justify-between">
         <div className="flex w-full flex-1 flex-row gap-4">
           <div className="flex flex-col items-center">
+          <a onClick={() => handleNavigateToComment(post)}>
             <div className="relative h-11 w-11">
               <Image
                 src={`https://api.multiavatar.com/${post.username}.png`}
@@ -84,9 +84,11 @@ const PostCard = ({ post }: Props) => {
                 className="rounded-full"
               />
             </div>
+            </a>
             <div className="post-card_bar" />
           </div>
           <div className="flex w-full flex-col">
+          <a onClick={() => handleNavigateToComment(post)}>
             <div className="w-fit">
               <h4 className="font-semibold text-light-1">{post.username}</h4>
             </div>
@@ -96,6 +98,7 @@ const PostCard = ({ post }: Props) => {
             <p className="mt-2 text-small-regular text-sm text-light-2">
               {post.content}
             </p>
+            </a>
             <div className={`mt-5 flex flex-col gap-3`}>
               <div className="flex gap3.5">
                 <Image
@@ -121,7 +124,6 @@ const PostCard = ({ post }: Props) => {
           </div>
         </div>
       </div>
-      </a>
       <p className="mt-2 text-small-regular text-sm text-light-2 font-semibold">
         {formatDateString(post.timestamp)} |{" "}
         <Link href={`/dashboard/community/${post.group_id}`}>
