@@ -13,6 +13,7 @@ const CommentCard = ({ comment }: Props) => {
   const [hasLiked, setHasLiked] = useState(comment.hasLiked);
 
   useEffect(() => {}, [hasLiked]);
+  console.log(comment, "COMMENT?");
 
   const handleUpVotePost = async (commentId: number) => {
     if (loggedInUser) {

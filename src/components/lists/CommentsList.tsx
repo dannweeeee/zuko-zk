@@ -1,36 +1,24 @@
 import ApiService from "@/ApiService";
 import React, { useEffect, useState } from "react";
 import CommentCard from "../cards/CommentCard";
+import { Comment } from "@/types";
 
 interface Props {
   postId: number;
 }
 
-interface UserData {
-  username: string;
-  vaultId: string;
-}
-
-interface Comment {
-  comment_id: number;
-  content: string;
-  likes_count: number;
-  post_id: number;
-  timestamp: number;
-  vault_id: string;
-}
-
 const CommentsList = ({ postId }: Props) => {
   const [comments, setComments] = useState<Comment[] | null>(null);
-  const [usernames, setUsernames] = useState<UserData[]>([]);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     const fetchComments = async () => {
       try {
+        setLoading(true);
         const data = await ApiService.fetchCommentsByPostId(postId);
         setComments(data);
         console.log("Comments:", data);
+        setLoading(false);
       } catch (error) {
         console.error("Error fetching comments:", error);
       }
@@ -38,24 +26,6 @@ const CommentsList = ({ postId }: Props) => {
 
     fetchComments();
   }, [postId]);
-
-  useEffect(() => {
-    if (comments && comments.length > 0) {
-      const fetchUsernames = async () => {
-        const usernames = await Promise.all(
-          comments.map((comment) =>
-            ApiService.fetchUserByVaultId(comment.vault_id)
-          )
-        );
-        setUsernames(usernames);
-        setLoading(false);
-      };
-      fetchUsernames();
-    }
-    if (comments && comments.length == 0) {
-      setLoading(false);
-    }
-  }, [comments]);
 
   return (
     <section className="mt-9 flex flex-col gap-10">
