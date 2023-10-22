@@ -87,7 +87,7 @@ export default function Home() {
               {cookie ? 
               <Button 
                 onClick={handleEnterZuko}
-                className="w-250 h-250 font-bold text-2xl bg-[#D5BDAF] rouded-lg"
+                className="w-250 h-250 font-bold text-2xl bg-primary/10 rouded-lg"
               >
                 Enter Zuko <ArrowRight size={30} />
               </Button> : (
