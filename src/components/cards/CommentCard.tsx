@@ -11,19 +11,23 @@ interface Props {
 const CommentCard = ({ comment }: Props) => {
   const { loggedInUser } = useGetLoggedInUser();
   const [hasLiked, setHasLiked] = useState(comment.hasLiked);
-  const [likesCount, setLikesCount] = useState(comment.likes_count);
+  const [likesCount, setLikesCount] = useState(comment.likes_count ?? 0);
 
   useEffect(() => {}, [hasLiked, likesCount]);
+
+  console.log(likesCount, "LIKESCOUNT", comment.content);
 
   const handleUpVotePost = async (commentId: number) => {
     if (loggedInUser) {
       if (!hasLiked) {
         setHasLiked(1);
-        setLikesCount((prev) => prev ?? 0 + 1);
+
+        setLikesCount((prev) => prev + 1);
+
         await ApiService.likeComment(loggedInUser.vault_id, commentId);
       } else {
         setHasLiked(0);
-        setLikesCount((prev) => prev ?? 0 - 1);
+        setLikesCount((prev) => prev - 1);
         await ApiService.unLikeComment(loggedInUser.vault_id, commentId);
       }
     }
