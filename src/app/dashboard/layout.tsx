@@ -21,7 +21,7 @@ export default function RootLayout({
       <body className={inter.className}>
         <Topbar />
 
-        <main className="flex flex-row">
+        <main className="flex flex-row bg-[#EDEDE9]">
           <LeftSidebar />
           <section className="main-container">
             <div className="w-full max-w-4xl">{children}</div>

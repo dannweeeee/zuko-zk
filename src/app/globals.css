@@ -112,7 +112,7 @@
 
   /* User card */
   .user-card {
-    @apply flex flex-col justify-between gap-4;
+    @apply flex flex-col justify-between gap-4 hover:bg-primary/10 rounded-lg px-5 py-5;
   }
 
   .user-card_avatar {
@@ -123,12 +123,22 @@
     @apply h-auto min-w-[74px] rounded-lg text-[12px] font-semibold text-white !important;
   }
 
+  /* Community card */
+  .community-view-card {
+    @apply flex flex-col justify-between gap-4 hover:bg-primary/10 rounded-lg px-5 py-5;
+  }
+  
+  .community-view-card_avatar {
+    @apply flex flex-1 items-start justify-start gap-3;
+  }
+  
+
   .searchbar {
     @apply flex gap-1 rounded-lg px-4 py-2;
   }
 
   .searchbar_input {
-    @apply border-none outline-none !important;
+    @apply border-none outline-none bg-primary/10 !important;
   }
 
   .topbar {
@@ -298,4 +308,17 @@
 
 .comment-form_btn {
   @apply rounded-3xl px-8 py-2 text-light-1 !important;
+}
+
+.wavy {
+  background-color: #e5e5f7;
+  opacity: 0.8;
+  background-image:  repeating-radial-gradient( circle at 0 0, transparent 0, #EDEDE9 10px ), repeating-linear-gradient( #D5BDAF, #F5EBE0 );
+}
+
+.circles {
+  background-color: #e5e5f7;
+  opacity: 0.8;
+  background-image: radial-gradient(circle at center center, #D5BDAF, #EDEDE9);
+  background-blend-mode: multiply;
 }

@@ -10,9 +10,12 @@ const TypewriterTitle = (props: Props) => {
                 loop: true, // loop indefinitely
             }}
             onInit={(typewriter) => {
-                typewriter.typeString("✅ Privacy-First Community")
+                typewriter
+                .typeString("✅ Connecting Anonymous Users to Communities")
                 .pauseFor(250).deleteAll()
-                .typeString("✅ ZK Hub for Knowledge and Innovation")
+                .typeString("✅ Powered by Simso Connect and Tableland")
+                .pauseFor(250).deleteAll()
+                .typeString("✅ Leveraging ZK Proofs for Ultimate Discretion")
                 .pauseFor(250).deleteAll()
                 .start();
             }}

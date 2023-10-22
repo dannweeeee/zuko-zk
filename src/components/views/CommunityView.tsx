@@ -50,7 +50,7 @@ function CommunityView() {
           ))}
         </>
       ) : (
-        <p className="!text-base-regular text-light-3">
+        <p className="!text-base-regular text-light-3 mt-8">
           No Communities Currently
         </p>
       )}

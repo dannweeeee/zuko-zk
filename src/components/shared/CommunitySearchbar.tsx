@@ -34,10 +34,10 @@ function CommunitySearchbar() {
     <div>
       <div className="searchbar">
         <Image
-          src="/assets/search-gray.svg"
+          src="/assets/magnifying-glass-solid.svg"
           alt="search"
-          width={24}
-          height={24}
+          width={22}
+          height={22}
           className="object-contain"
         />
         <Input
