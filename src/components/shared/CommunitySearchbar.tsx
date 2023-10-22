@@ -51,7 +51,7 @@ function CommunitySearchbar() {
           Search
         </Button>
       </div>
-      <div className="mt-5 flex flex-col gap-9 rounded-lg p-5">
+      <div className="flex flex-col gap-9 rounded-lg p-5">
         {communityData ? (
           communityData.results.map((result) => (
             <CommunityCard

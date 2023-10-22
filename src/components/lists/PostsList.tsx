@@ -4,6 +4,7 @@ import ApiService from "@/ApiService";
 import { useEffect, useState } from "react";
 import PostCard from "../cards/PostCard";
 import useGetLoggedInUser from "@/hooks/useGetLoggedInUser";
+import SkeletonLoading from "../ui/SkeletonLoading";
 
 interface Community {
   group_id: string;
@@ -26,22 +27,24 @@ interface PostsByCommunity {
 
 const PostsList = () => {
   const [posts, setPosts] = useState<PostsByCommunity[] | null>(null);
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
 
   const { loggedInUser } = useGetLoggedInUser();
+  
   useEffect(() => {
     const fetchAllPostsForAllCommunitiesUserIsAPartOf = async () => {
       if (loggedInUser) {
         try {
-          setLoading(true);
           const allPosts =
             await ApiService.fetchPostsByGroupIdAndGetLikedByVaultId(
               loggedInUser.vault_id
             );
           setPosts(allPosts);
-          setLoading(false);
         } catch (error) {
           console.error("Error fetching communities by vault ID:", error);
+        } finally {
+          // Set loading to false after the data has been fetched or an error occurred
+          setLoading(false);
         }
       }
     };
@@ -50,18 +53,16 @@ const PostsList = () => {
 
   return (
     <section className="mt-2 flex flex-col">
-      {loading ? (
-        <h1 className="font-semibold text-3xl text-center blue-text-gradient">
-          Loading...
-        </h1>
-      ) : posts && posts.length > 0 ? (
+    {loading ? (
+      <SkeletonLoading />
+    ) : (
+      posts && posts.length > 0 ? (
         posts.map((post, index) => <PostCard key={post.post_id} post={post} />)
       ) : (
-        <p className="font-semibold text-3xl text-center blue-text-gradient">
-          {posts === null ? "Loading..." : "No Posts Currently"}
-        </p>
-      )}
-    </section>
+        <p>No Posts Currently</p>
+      )
+    )}
+  </section>
   );
 };
 

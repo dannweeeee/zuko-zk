@@ -1,6 +1,7 @@
 "use client";
 
 import TypewriterTitle from "@/components/shared/TypewriterTitle";
+import SkeletonLoading from "@/components/ui/SkeletonLoading";
 import { Button } from "@/components/ui/button";
 import SismoButton from "@/components/ui/sismoConnectButton";
 import { getCookie } from "@/helper";
@@ -53,7 +54,7 @@ export default function Home() {
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full">
         {loading ? (
           <h1 className="font-semibold text-5xl text-center blue-text-gradient">
-            Loading...
+            <SkeletonLoading />
           </h1>
         ) : (
           <div>

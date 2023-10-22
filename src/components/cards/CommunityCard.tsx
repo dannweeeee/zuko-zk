@@ -12,7 +12,8 @@ interface Props {
 
 function CommunityCard({ communityId, description, groupId, name}: Props) {
   return (
-    <article className='community-card'>
+    <article className='user-card hover:bg-primary/5 p-5 rounded-lg cursor-pointer'>
+      <Link href={`/dashboard/community/${groupId}`}>
       <div className='flex flex-wrap items-center gap-3'>
         <div className='relative h-12 w-12'>
           <Image
@@ -29,14 +30,7 @@ function CommunityCard({ communityId, description, groupId, name}: Props) {
       </div>
 
       <p className='mt-4 text-subtle-medium text-gray-1'>{description}</p>
-
-      <div className='mt-5 flex flex-wrap items-center justify-between gap-3'>
-        <Link href={`/dashboard/community/${groupId}`}>
-          <Button size='sm' className='community-card_btn'>
-            View
-          </Button>
-        </Link>
-      </div>
+      </Link>
     </article>
   );
 }

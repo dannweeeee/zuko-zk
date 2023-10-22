@@ -3,6 +3,7 @@
 import ApiService from "@/ApiService";
 import { useEffect, useState } from "react";
 import UserCard from "../cards/UserCard";
+import SkeletonLoading from "../ui/SkeletonLoading";
 
 interface UserData {
   username: string;
@@ -11,6 +12,7 @@ interface UserData {
 
 const UserList = () => {
   const [users, setUsers] = useState<UserData[] | null>(null);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -19,6 +21,8 @@ const UserList = () => {
         setUsers(data);
       } catch (error) {
         console.error("Error fetching users:", error);
+      } finally {
+        setLoading(false);
       }
     };
 
@@ -27,7 +31,9 @@ const UserList = () => {
 
   return (
     <div>
-      {users ? (
+      {loading ? (
+        <SkeletonLoading />
+      ) : users ? (
         users.map((user) => (
           <UserCard
             key={user.vaultId}
