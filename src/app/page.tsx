@@ -9,6 +9,7 @@ import { ArrowRight } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
+import { HashLoader } from "react-spinners";
 
 export default function Home() {
   const [loading, setLoading] = useState(false);
@@ -54,7 +55,10 @@ export default function Home() {
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full">
         {loading ? (
           <h1 className="font-semibold text-5xl text-center blue-text-gradient">
-            <SkeletonLoading />
+            <HashLoader 
+              className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full"
+              color="000000"
+            />
           </h1>
         ) : (
           <div>

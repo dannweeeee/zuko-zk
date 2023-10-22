@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import CommentCard from "../cards/CommentCard";
 import { Comment } from "@/types";
 import useGetLoggedInUser from "@/hooks/useGetLoggedInUser";
+import SkeletonLoading from "../ui/SkeletonLoading";
 
 interface Props {
   postId: number;
@@ -10,7 +11,7 @@ interface Props {
 
 const CommentsList = ({ postId }: Props) => {
   const [comments, setComments] = useState<Comment[] | null>(null);
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
   const { loggedInUser } = useGetLoggedInUser();
 
   useEffect(() => {
@@ -38,7 +39,7 @@ const CommentsList = ({ postId }: Props) => {
       <h1 className="font-semibold text-xl">Comments </h1>
       {loading ? (
         <h1 className="font-semibold text-3xl text-center blue-text-gradient">
-          Loading...
+          <SkeletonLoading />
         </h1>
       ) : (
         <>
