@@ -7,6 +7,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
+import TimeAgo from "../shared/TimeAgo";
 
 interface Props {
   key: number;
@@ -71,33 +72,35 @@ const PostCard = ({ post }: Props) => {
   };
 
   return (
-    <article className={`flex w-full flex-col hover:bg-primary/5 p-5 rounded-lg cursor-pointer`}>
+    <article
+      className={`flex w-full flex-col hover:bg-primary/5 p-5 rounded-lg cursor-pointer`}
+    >
       <div className="flex items-start justify-between">
         <div className="flex w-full flex-1 flex-row gap-4">
           <div className="flex flex-col items-center">
-          <a onClick={() => handleNavigateToComment(post)}>
-            <div className="relative h-11 w-11">
-              <Image
-                src={`https://api.multiavatar.com/${post.username}.png`}
-                alt="Profile Image"
-                fill
-                className="rounded-full"
-              />
-            </div>
+            <a onClick={() => handleNavigateToComment(post)}>
+              <div className="relative h-11 w-11">
+                <Image
+                  src={`https://api.multiavatar.com/${post.username}.png`}
+                  alt="Profile Image"
+                  fill
+                  className="rounded-full"
+                />
+              </div>
             </a>
             <div className="post-card_bar" />
           </div>
           <div className="flex w-full flex-col">
-          <a onClick={() => handleNavigateToComment(post)}>
-            <div className="w-fit">
-              <h4 className="font-semibold text-light-1">{post.username}</h4>
-            </div>
-            <h1 className="mt-2 font-bold text-xl text-light-2">
-              {post.title}
-            </h1>
-            <p className="mt-2 text-small-regular text-sm text-light-2">
-              {post.content}
-            </p>
+            <a onClick={() => handleNavigateToComment(post)}>
+              <div className="w-fit">
+                <h4 className="font-semibold text-light-1">{post.username}</h4>
+              </div>
+              <h1 className="mt-2 font-bold text-xl text-light-2">
+                {post.title}
+              </h1>
+              <p className="mt-2 text-small-regular text-sm text-light-2">
+                {post.content}
+              </p>
             </a>
             <div className={`mt-5 flex flex-col gap-3`}>
               <div className="flex gap3.5">
@@ -119,17 +122,19 @@ const PostCard = ({ post }: Props) => {
                   className="cursor-pointer object-contain"
                   onClick={() => handleNavigateToComment(post)}
                 />
+                <div className="ml-auto text-sm text-light-2">
+                  GroupID: {post.group_id} |{" "}
+                  <TimeAgo timestamp={post.timestamp} />
+                </div>
+                {/* <p className="mt-2 text-small-regular text-sm text-light-2 font-semibold">
+                  {formatDateString(post.timestamp)} |{" "}
+                  <Link href={`/dashboard/community/${post.group_id}`}></Link>
+                </p> */}
               </div>
             </div>
           </div>
         </div>
       </div>
-      <p className="mt-2 text-small-regular text-sm text-light-2 font-semibold">
-        {formatDateString(post.timestamp)} |{" "}
-        <Link href={`/dashboard/community/${post.group_id}`}>
-          GroupID: {post.group_id}
-        </Link>
-      </p>
     </article>
   );
 };
