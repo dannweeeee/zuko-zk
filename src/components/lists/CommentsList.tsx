@@ -1,6 +1,6 @@
-import ApiService from '@/ApiService';
-import React, { useEffect, useState } from 'react';
-import CommentCard from '../cards/CommentCard';
+import ApiService from "@/ApiService";
+import React, { useEffect, useState } from "react";
+import CommentCard from "../cards/CommentCard";
 
 interface Props {
   postId: number;
@@ -23,16 +23,16 @@ interface Comment {
 const CommentsList = ({ postId }: Props) => {
   const [comments, setComments] = useState<Comment[] | null>(null);
   const [usernames, setUsernames] = useState<UserData[]>([]);
-  const [loading, setLoading] = useState(true); 
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchComments = async () => {
       try {
         const data = await ApiService.fetchCommentsByPostId(postId);
         setComments(data);
-        console.log('Comments:', data);
+        console.log("Comments:", data);
       } catch (error) {
-        console.error('Error fetching comments:', error);
+        console.error("Error fetching comments:", error);
       }
     };
 
@@ -43,7 +43,9 @@ const CommentsList = ({ postId }: Props) => {
     if (comments && comments.length > 0) {
       const fetchUsernames = async () => {
         const usernames = await Promise.all(
-          comments.map((comment) => ApiService.fetchUserByVaultId(comment.vault_id))
+          comments.map((comment) =>
+            ApiService.fetchUserByVaultId(comment.vault_id)
+          )
         );
         setUsernames(usernames);
         setLoading(false);
@@ -54,8 +56,7 @@ const CommentsList = ({ postId }: Props) => {
       setLoading(false);
     }
   }, [comments]);
-  
-  
+
   return (
     <section className="mt-9 flex flex-col gap-10">
       <h1 className="font-semibold text-xl">Comments </h1>
@@ -67,22 +68,14 @@ const CommentsList = ({ postId }: Props) => {
         <>
           {comments && comments.length > 0 ? (
             comments.map((comment, index) => (
-              <CommentCard
-                key={comment.comment_id}
-                content={comment.content}
-                likesCount={comment.likes_count}
-                postId={comment.post_id}
-                timestamp={comment.timestamp}
-                vaultId={comment.vault_id}
-                username={usernames[index] ? usernames[index].username : ""}
-              />
+              <CommentCard key={comment.comment_id} comment={comment} />
             ))
           ) : (
-            <p className='no-result font-semibold'>No Comments Currently</p>
+            <p className="no-result font-semibold">No Comments Currently</p>
           )}
         </>
       )}
-  </section>
+    </section>
   );
 };
 

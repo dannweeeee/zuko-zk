@@ -145,8 +145,9 @@ const ApiService = {
     },
 
 
-    fetchPostsByGroupIdAndGetLikedByVaultId: async (groupId: string, vaultId: string) => {
-        const url = `${API_BASE_URL}/v1/post/${groupId}/user/${vaultId}`;
+    fetchPostsByGroupIdAndGetLikedByVaultId: async (vaultId: string) => {
+        const url = `${API_BASE_URL}/v1/post/user/${vaultId}`;
+
         const options = {
             method: ApiMethods.GET,
             headers: HEADERS,
@@ -185,6 +186,43 @@ const ApiService = {
             method: ApiMethods.DELETE,
             headers: HEADERS,
             body: JSON.stringify({ vault_id, post_id }),
+        };
+
+        const response = await fetch(url, options);
+
+        if (response.status === 200) {
+            return response.json();
+        } else {
+            throw new Error(`Request failed with status ${response.status}`);
+        }
+
+    },
+
+    likeComment: async (vault_id: string, comment_id: number) => {
+        const url = `${API_BASE_URL}/v1/like/comment`;
+        const options = {
+            method: ApiMethods.POST,
+            headers: HEADERS,
+            body: JSON.stringify({ vault_id, post_id: comment_id }),
+        };
+
+        const response = await fetch(url, options);
+
+        if (response.status === 200) {
+            return response.json();
+        } else {
+            throw new Error(`Request failed with status ${response.status}`);
+        }
+
+    },
+
+
+    unLikeComment: async (vault_id: string, comment_id: number) => {
+        const url = `${API_BASE_URL}/v1/like/comment`;
+        const options = {
+            method: ApiMethods.DELETE,
+            headers: HEADERS,
+            body: JSON.stringify({ vault_id, comment_id }),
         };
 
         const response = await fetch(url, options);

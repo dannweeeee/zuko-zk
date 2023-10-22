@@ -1,5 +1,4 @@
-export
-    interface Post {
+export interface Post {
     comments_count: number;
     content: string;
     group_id: string;
@@ -10,4 +9,15 @@ export
     title: string;
     username: string;
     vault_id: string;
+}
+
+export interface Comment {
+    comment_id: number;
+    content: string;
+    likes_count: null | number;
+    post_id: number;
+    timestamp: number;
+    username: string;
+    vault_id: string;
+    hasLiked: number;
 }
