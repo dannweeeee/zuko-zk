@@ -11,17 +11,19 @@ interface Props {
 const CommentCard = ({ comment }: Props) => {
   const { loggedInUser } = useGetLoggedInUser();
   const [hasLiked, setHasLiked] = useState(comment.hasLiked);
+  const [likesCount, setLikesCount] = useState(comment.likes_count);
 
-  useEffect(() => {}, [hasLiked]);
-  console.log(comment, "COMMENT?", comment.hasLiked);
+  useEffect(() => {}, [hasLiked, likesCount]);
 
   const handleUpVotePost = async (commentId: number) => {
     if (loggedInUser) {
-      if (!comment.hasLiked) {
+      if (!hasLiked) {
         setHasLiked(1);
+        setLikesCount((prev) => prev ?? 0 + 1);
         await ApiService.likeComment(loggedInUser.vault_id, commentId);
       } else {
         setHasLiked(0);
+        setLikesCount((prev) => prev ?? 0 - 1);
         await ApiService.unLikeComment(loggedInUser.vault_id, commentId);
       }
     }
@@ -65,6 +67,8 @@ const CommentCard = ({ comment }: Props) => {
                   height={24}
                   className="cursor-pointer object-contain"
                 />
+                <p className="ml-1 text-s text-light-2">{likesCount}</p>
+
                 {/* <Image src="/assets/repost.svg" alt="repost" width={24} height={24} className="cursor-pointer object-contain"/>
                             <Image src="/assets/share.svg" alt="share" width={24} height={24} className="cursor-pointer object-contain"/> */}
               </div>

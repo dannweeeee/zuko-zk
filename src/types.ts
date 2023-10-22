@@ -9,6 +9,7 @@ export interface Post {
     title: string;
     username: string;
     vault_id: string;
+    community_name: string;
 }
 
 export interface Comment {

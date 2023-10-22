@@ -26,9 +26,11 @@ const PostCard = ({ post }: Props) => {
 
   useEffect(() => {}, [hasLiked, likesCount]);
 
+  console.log(likesCount, "Likescount", post.post_id, post.title);
+
   const handleUpVotePost = async (postId: number) => {
     if (loggedInUser) {
-      if (!post.hasLiked) {
+      if (!hasLiked) {
         setHasLiked(1);
         setLikesCount((prev) => prev + 1);
         await ApiService.likePost(loggedInUser.vault_id, postId);
@@ -117,17 +119,19 @@ const PostCard = ({ post }: Props) => {
                   height={24}
                   className="cursor-pointer object-contain"
                 />
+                <p className="ml-1 text-s text-light-2">{likesCount}</p>
                 <Image
                   src="/assets/reply.svg"
                   alt="reply"
                   width={24}
                   height={24}
-                  className="cursor-pointer object-contain"
+                  className="ml-3 cursor-pointer object-contain"
                   onClick={() => handleNavigateToComment(post)}
                 />
+                <p className="text-s text-light-2">{post.comments_count}</p>
+
                 <div className="ml-auto text-sm text-light-2">
-                  GroupID: {post.group_id} |{" "}
-                  <TimeAgo timestamp={post.timestamp} />
+                  {post.community_name} | <TimeAgo timestamp={post.timestamp} />
                 </div>
                 {/* <p className="mt-2 text-small-regular text-sm text-light-2 font-semibold">
                   {formatDateString(post.timestamp)} |{" "}
