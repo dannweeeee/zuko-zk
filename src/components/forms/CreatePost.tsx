@@ -109,7 +109,7 @@ function CreatePost() {
       <label className="font-semibold">Content</label>
       <Textarea
         label="Content"
-        rows={10}
+        rows={8}
         {...(control as any).register("content", {
           required: "Content is required",
         })}

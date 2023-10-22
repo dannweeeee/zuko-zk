@@ -5,10 +5,11 @@ import { useEffect, useState } from "react";
 import PostCard from "../cards/PostCard";
 import useGetLoggedInUser from "@/hooks/useGetLoggedInUser";
 import { Post } from "@/types";
+import SkeletonLoading from "../ui/SkeletonLoading";
 
 const PostsTab = ({ group_id }: { group_id: string }) => {
   const [posts, setPosts] = useState<Post[]>([]);
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
   const { loggedInUser } = useGetLoggedInUser();
 
   useEffect(() => {
@@ -30,11 +31,9 @@ const PostsTab = ({ group_id }: { group_id: string }) => {
   }, [group_id, loggedInUser]);
 
   return (
-    <section className="mt-9 flex flex-col gap-10">
+    <section className="flex flex-col">
       {loading ? (
-        <h1 className="font-semibold text-3xl text-center blue-text-gradient">
-          Loading...
-        </h1>
+        <SkeletonLoading />
       ) : posts.length > 0 ? (
         <>
           {posts.map((post, index) => (
@@ -42,7 +41,7 @@ const PostsTab = ({ group_id }: { group_id: string }) => {
           ))}
         </>
       ) : (
-        <p className="!text-base-regular text-light-3 no-result">
+        <p className="!text-base-regular text-light-3 no-result mt-10">
           No Posts Currently
         </p>
       )}
